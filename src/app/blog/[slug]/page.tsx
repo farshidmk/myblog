@@ -44,7 +44,7 @@ export default async function ProjectPage({
 }) {
   //   const content = await fs.readFile(path.join(process.cwd(), 'src/projects', `${params.slug}.mdx`), 'utf-8');
   const content = await fs.readFile(
-    path.join(process.cwd(), "src/projects", `${params.slug}.mdx`),
+    path.join(process.cwd(), "src/blog", `${params.slug}.mdx`),
     "utf-8"
   );
   const data = await compileMDX<Frontmatter>({
