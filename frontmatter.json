@@ -52,7 +52,7 @@
   "frontMatter.content.pageFolders": [
     {
       "title": "blog",
-      "path": "[[workspace]]/E:/projects/next/myblog/src/blog"
+      "path": "[[workspace]]/src/blog"
     }
   ],
   "frontMatter.git.enabled": true

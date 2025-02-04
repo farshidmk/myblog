@@ -1,13 +1,13 @@
-type BlogTags = "learning" | "book";
-type LearningCategory = "Nextjs";
+type BlogTags = "Nextjs";
+type LearningCategory = "learning" | "book";
 
 type Frontmatter = {
   title: string;
-  createDate: Date;
-  tag: BlogTags;
-  gategory?: LearningCategory;
+  date: string;
+  tags?: BlogTags[];
+  categories?: LearningCategory[];
   description: string;
-  imgSrc?: string;
+  preview?: string;
   Auther?: string;
   AutherImg?: string;
 };
