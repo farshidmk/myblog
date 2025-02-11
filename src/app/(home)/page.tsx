@@ -1,15 +1,15 @@
-import Image from "next/image";
-import myPhoto from "/public/images/me.jpg";
+// import Image from "next/image";
+// import myPhoto from "/public/images/me.jpg";
 
 export default function Home() {
   return (
     <main>
       <div className="flex md:justify-between container flex-col justify-center items-center md:items-start md:flex-row mx-auto max-w-5xl mt-4  gap-4 md:mt-8">
-        <Image
+        {/* <Image
           src={myPhoto}
           alt="farshid"
           className="rounded-full w-60 h-60 shadow-2xl inset-1 object-cover"
-        />
+        /> */}
         <div className="md:w-1/2 w-full  p-2">
           <h1 className="text-4xl mb-3 text-center md:text-right font-bold">
             درباره <span className="text-primary font-bold">من</span> و{" "}
