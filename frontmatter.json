@@ -51,9 +51,9 @@
   "frontMatter.preview.host": "http://localhost:3000",
   "frontMatter.content.pageFolders": [
     {
-      "title": "blog",
-      "path": "[[workspace]]/E:/projects/next/myblog/src/blog"
+      "title": "myblog",
+      "path": "[[workspace]]/D:/personal/projects/myblog"
     }
   ],
-  "frontMatter.git.enabled": true
+  "frontMatter.git.enabled": false
 }
