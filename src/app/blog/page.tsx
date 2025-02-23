@@ -32,8 +32,14 @@ const page = async () => {
       {blogs.map(({ title, slug, description, preview, categories, tags }) => {
         return (
           <Link href={`/blog/${slug}`} key={slug} className="">
-            <div className="bg-slate-400 rounded-xl p-3">
-              <Image src={preview!} alt={slug} width={300} height={300} />
+            <div className="bg-slate-100 border border-slate-400 rounded-xl p-3 ">
+              <Image
+                src={preview!}
+                alt={slug}
+                width={200}
+                height={200}
+                className="object-cover m-auto"
+              />
               <h6 className="text-base font-bold text-center">{title}</h6>
               <p className="truncate text-xs">{description}</p>
               <div className="flex gap-1 flex-wrap flex-row-reverse mb-1 mt-2">

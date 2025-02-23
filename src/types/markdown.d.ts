@@ -1,4 +1,4 @@
-type BlogTags = "Nextjs";
+type BlogTags = "Nextjs" | "React.js";
 type BlogCategory = "learning" | "book";
 
 type Frontmatter = {

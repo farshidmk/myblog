@@ -6,7 +6,7 @@ const CategoryChip = ({ category }: Props) => {
   switch (category) {
     case "learning":
       return (
-        <div className="text-xs font-bold rounded-2xl bg-purple-200 py-1 px-2 border border-purple-800 flex items-center justify-center">
+        <div className="text-sm  rounded-2xl bg-blue-100 py-1 px-2 border border-blue-700 flex items-center justify-center text-blue-700">
           Learning
         </div>
       );
