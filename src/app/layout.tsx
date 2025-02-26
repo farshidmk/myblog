@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/ui/Navbar";
 import { Vazirmatn } from "next/font/google";
+import { SessionProvider } from "next-auth/react";
 
 export const vazirmatn = Vazirmatn({
   subsets: ["arabic"],
@@ -20,8 +21,10 @@ export default function RootLayout({
   return (
     <html lang="fa" dir="rtl">
       <body className={`${vazirmatn.className} antialiased`}>
-        <Navbar />
-        {children}
+        <SessionProvider>
+          <Navbar />
+          {children}
+        </SessionProvider>
       </body>
     </html>
   );
