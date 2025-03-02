@@ -1,13 +1,24 @@
 "use client";
-import React from "react";
-import { useForm } from "react-hook-form";
+import { credentialsLogin } from "@/shared/actions";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signInSchema } from "../auth-validation";
+import { useForm } from "react-hook-form";
 import { SignUpForm } from "../auth-types";
-import { signUp } from "@/shared/actions";
-import { signIn } from "@/auth";
+import { signInSchema } from "../auth-validation";
+import { signOut, useSession } from "next-auth/react";
+
 type LoginForm = Omit<SignUpForm, "name">;
 const Login = () => {
+  const session = useSession();
+  console.log({ session });
+
+  // useEffect(() => {
+  //   session.
+
+  //   return () => {
+  //     second
+  //   }
+  // }, [third])
+
   // Use react-hook-form with zodResolver to apply validation
   const {
     register,
@@ -19,14 +30,20 @@ const Login = () => {
 
   // Handle form submission
   const onSubmit = async (data: LoginForm) => {
-    const dbRes = await signIn("credentials", { values: data });
-    console.log("Form submitted with data:", data, { dbRes });
+    try {
+      const dbRes = await credentialsLogin(data.password, data.username);
+      console.log("Form submitted with data:", data, { dbRes });
+    } catch (error) {
+      //TODO: check error type and send proper error message
+      console.log(error);
+    }
   };
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
       style={{ maxWidth: 400, margin: "auto" }}
     >
+      <h1>session: {session.data?.user?.name}</h1>
       <div>
         <label htmlFor="username">Username</label>
         <input
@@ -55,6 +72,8 @@ const Login = () => {
 
       <div>
         <button type="submit">Submit</button>
+
+        <button onClick={() => signOut()}>logout</button>
       </div>
     </form>
   );
