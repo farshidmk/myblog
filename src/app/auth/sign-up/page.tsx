@@ -18,8 +18,11 @@ const SignUp = () => {
 
   // Handle form submission
   const onSubmit = async (data: SignUpForm) => {
-    const dbRes = await signUp({ ...data });
-    console.log("Form submitted with data:", data, { dbRes });
+    try {
+      const dbRes = await signUp({ ...data });
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <form

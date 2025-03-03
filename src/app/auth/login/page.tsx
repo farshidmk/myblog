@@ -5,21 +5,14 @@ import { useForm } from "react-hook-form";
 import { SignUpForm } from "../auth-types";
 import { signInSchema } from "../auth-validation";
 import { signOut, useSession } from "next-auth/react";
+import { useState } from "react";
+import { isKnownError } from "@/shared/errorCheck";
+import Alert from "@/components/ui/alert/Alert";
 
 type LoginForm = Omit<SignUpForm, "name">;
 const Login = () => {
+  const [serverError, setServerError] = useState("");
   const session = useSession();
-  console.log({ session });
-
-  // useEffect(() => {
-  //   session.
-
-  //   return () => {
-  //     second
-  //   }
-  // }, [third])
-
-  // Use react-hook-form with zodResolver to apply validation
   const {
     register,
     handleSubmit,
@@ -28,16 +21,21 @@ const Login = () => {
     resolver: zodResolver(signInSchema),
   });
 
-  // Handle form submission
   const onSubmit = async (data: LoginForm) => {
     try {
-      const dbRes = await credentialsLogin(data.password, data.username);
-      console.log("Form submitted with data:", data, { dbRes });
+      await credentialsLogin(data.password, data.username);
     } catch (error) {
+      if (isKnownError(error)) {
+        setServerError(error.message);
+      } else {
+        setServerError("خطا در ارتباط با سرور");
+      }
       //TODO: check error type and send proper error message
       console.log(error);
     }
   };
+
+  console.log(Boolean(serverError));
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -70,6 +68,9 @@ const Login = () => {
         )}
       </div>
 
+      {Boolean(serverError) && (
+        <Alert text={serverError} severity="error" variant="soft" />
+      )}
       <div>
         <button type="submit">Submit</button>
 
