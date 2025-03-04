@@ -20,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fa" dir="rtl">
-      <body className={`${vazirmatn.className} antialiased`}>
+      <body className={`${vazirmatn.className} antialiased h-screen`}>
         <SessionProvider>
           <Navbar />
           {children}

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 import logo from "/public/logo.png";
+import AuthButton from "./authButton/AuthButton";
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -27,15 +28,18 @@ const Navbar = () => {
             </li>
           ))}
         </ul>
-        <Link href={"/"} className="text-xl font-bold ">
-          <Image
-            src={logo}
-            alt="farshid"
-            width={50}
-            height={50}
-            className="hover:scale-110 transition  duration-300 ease-in-out"
-          />
-        </Link>
+        <div className="flex gap-2">
+          <AuthButton />
+          <Link href={"/"} className="text-xl font-bold ">
+            <Image
+              src={logo}
+              alt="farshid"
+              width={50}
+              height={50}
+              className="hover:scale-110 transition  duration-300 ease-in-out"
+            />
+          </Link>
+        </div>
       </div>
     </nav>
   );

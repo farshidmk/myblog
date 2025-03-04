@@ -1,16 +1,8 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-// Your own logic for dealing with plaintext password strings; be careful!
-import {
-  isPasswordMatch,
-  saltAndHashPassword,
-} from "./shared/saltAndHashPassword";
+import { isPasswordMatch } from "./shared/saltAndHashPassword";
 import { prisma } from "./lib/prisma";
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import { signInSchema } from "./app/auth/auth-validation";
-import { getUserByUsernameFromDb } from "./shared/actions";
-import { ZodError } from "zod";
-import { User } from "@prisma/client";
 import GitHub from "next-auth/providers/github";
 
 const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
@@ -48,24 +40,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             String(password),
             String(user?.password)
           );
-          console.log("---------", isMatched, user);
           if (isMatched) {
             return user;
           }
           return null;
-          // return {
-          //   name: "teststet",
-          //   email: "testset@asdfasd.com",
-          //   id: "123123",
-          // };
-          // if (isMatched) {
-          // } else {
-          //   return null;
-          // }
-          // return new AuthError("نام کاربری یا رمز عبور اشتباه است.");
         } catch (error) {
           return null;
-          // return new AuthError("نام کاربری یا رمز عبور اشتباه است.");
         }
       },
     }),
@@ -81,13 +61,5 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       session.user.id = token.id;
       return session;
     },
-    //   async session(props: any) {
-    //     console.log({ props });
-    //     const { session, user } = props;
-    //     if (session && user) {
-    //       session.user.id = user.id;
-    //     }
-    //     return session;
-    //   },
   },
 });

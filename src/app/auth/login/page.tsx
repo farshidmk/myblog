@@ -4,15 +4,19 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { SignUpForm } from "../auth-types";
 import { signInSchema } from "../auth-validation";
-import { signOut, useSession } from "next-auth/react";
 import { useState } from "react";
 import { isKnownError } from "@/shared/errorCheck";
 import Alert from "@/components/ui/alert/Alert";
+import { useRouter } from "next/navigation";
+import AuthFormLayout from "../AuthFormLayout";
+import Link from "next/link";
+import { UserRoundPlus } from "lucide-react";
 
 type LoginForm = Omit<SignUpForm, "name">;
 const Login = () => {
   const [serverError, setServerError] = useState("");
-  const session = useSession();
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -23,7 +27,11 @@ const Login = () => {
 
   const onSubmit = async (data: LoginForm) => {
     try {
-      await credentialsLogin(data.password, data.username);
+      const res = await credentialsLogin(data.password, data.username);
+      if (res?.error) {
+        setServerError(res.error); // If error, show the error message
+      }
+      router.push("/");
     } catch (error) {
       if (isKnownError(error)) {
         setServerError(error.message);
@@ -35,48 +43,62 @@ const Login = () => {
     }
   };
 
-  console.log(Boolean(serverError));
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      style={{ maxWidth: 400, margin: "auto" }}
-    >
-      <h1>session: {session.data?.user?.name}</h1>
-      <div>
-        <label htmlFor="username">Username</label>
-        <input
-          id="username"
-          type="text"
-          {...register("username")}
-          placeholder="Enter your username"
-        />
-        {errors.username && (
-          <p style={{ color: "red" }}>{errors.username.message}</p>
+    <AuthFormLayout title="ورود">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="w-full flex flex-col gap-1 mb-2">
+          <label className="text-base font-semibold" htmlFor="username">
+            نام کاربری
+          </label>
+          <input
+            id="username"
+            type="text"
+            {...register("username")}
+            placeholder="نام کاربری را وارد کنید..."
+            className="input input-sm"
+          />
+          {errors.username && (
+            <p className="text-sm text-red-600">{errors.username.message}</p>
+          )}
+        </div>
+
+        <div className="w-full flex flex-col gap-1">
+          <label className="text-base font-semibold" htmlFor="password">
+            رمز
+          </label>
+          <input
+            id="password"
+            type="password"
+            {...register("password")}
+            placeholder="رمز عبور را وارد کنید..."
+            className="input input-sm"
+          />
+          {errors.password && (
+            <p className="text-sm text-red-600">{errors.password.message}</p>
+          )}
+        </div>
+
+        {Boolean(serverError) && (
+          <Alert text={serverError} severity="error" variant="soft" />
         )}
-      </div>
 
-      <div>
-        <label htmlFor="password">Password</label>
-        <input
-          id="password"
-          type="password"
-          {...register("password")}
-          placeholder="Enter your password"
-        />
-        {errors.password && (
-          <p style={{ color: "red" }}>{errors.password.message}</p>
-        )}
-      </div>
+        <div className="w-full flex items-center justify-center">
+          <button
+            type="submit"
+            className="btn btn-wide btn-primary btn-outline mt-5 mb-5 "
+          >
+            ورود
+          </button>
+        </div>
 
-      {Boolean(serverError) && (
-        <Alert text={serverError} severity="error" variant="soft" />
-      )}
-      <div>
-        <button type="submit">Submit</button>
-
-        <button onClick={() => signOut()}>logout</button>
-      </div>
-    </form>
+        <Link href="/auth/sign-up">
+          <p className="no-underline font-semibold text-accent flex items-center gap-1">
+            <UserRoundPlus />
+            ثبت نام در سایت
+          </p>
+        </Link>
+      </form>
+    </AuthFormLayout>
   );
 };
 
