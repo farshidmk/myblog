@@ -8,9 +8,9 @@ import GitHub from "next-auth/providers/github";
 const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
 const GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
 
-if (!GITHUB_CLIENT_ID || !GITHUB_CLIENT_SECRET) {
-  throw new Error("Missing github oauth credentials");
-}
+// if (!GITHUB_CLIENT_ID || !GITHUB_CLIENT_SECRET) {
+//   throw new Error("Missing github oauth credentials");
+// }
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),

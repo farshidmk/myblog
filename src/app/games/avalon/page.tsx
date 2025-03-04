@@ -1,18 +1,15 @@
 "use client";
-import React, { useState } from "react";
-
-type Props = {};
-
-const AvalonGamePage = (props: Props) => {
-  return <div></div>;
-};
-
-export default AvalonGamePage;
+import React from "react";
+import { useAvalonGame } from "./AvalonProvider";
+import ChoosePlayers from "./components/ChoosePlayers";
 
 //https://tgmafia.com/how-play-avalon/
 
 const AvalonGame = () => {
-  const [numberOfPlayers, setNumberOfPlayers] = useState(5);
-  const [playersName, setPlayersName] = useState<string[]>([]);
-  return;
+  const { gameStep } = useAvalonGame();
+  return (
+    <div>{gameStep === "choose-players" ? <ChoosePlayers /> : "avalon"}</div>
+  );
 };
+
+export default AvalonGame;

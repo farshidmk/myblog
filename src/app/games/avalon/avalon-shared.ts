@@ -1,4 +1,5 @@
 import { AvalonRole } from "./avalon-types";
+import { z } from "zod";
 
 export const AVALON_ROLES: AvalonRole[] = [
   {
@@ -64,3 +65,7 @@ export const AVALON_ROLES: AvalonRole[] = [
     imgUrl: "/public/images/avalon/royalServant.png",
   },
 ];
+
+export const avalonGameUsersInputValidation = z.object({
+  name: z.string().min(1, "نام بازیکن را وارد کنید"),
+});

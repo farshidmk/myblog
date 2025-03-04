@@ -31,3 +31,5 @@ export type AvalonContext = {
    */
   setGameStep: React.Dispatch<React.SetStateAction<AvalonContext["gameStep"]>>;
 };
+
+export type AvalonGetPlayersNameForm = { players: { name: string }[] };
