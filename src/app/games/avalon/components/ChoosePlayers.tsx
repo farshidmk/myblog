@@ -1,21 +1,79 @@
 "use client";
 import React, { useState } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
-import { AvalonGetPlayersNameForm } from "../avalon-types";
+import { AvalonGetPlayersNameForm, AvalonPlayer } from "../avalon-types";
+import { AVALON_ROLES } from "../avalon-shared";
+import { useAvalonGame } from "../AvalonProvider";
+import CharacterCard from "./CharacterCard";
 
 const ChoosePlayers = () => {
+  const { setPlayers, setGameStep } = useAvalonGame();
   const [numberOfPlayers, setNumberOfPlayers] = useState(5);
-  const { watch, control, handleSubmit } = useForm<AvalonGetPlayersNameForm>(
-    {}
-  );
+  const { watch, control, handleSubmit } = useForm<AvalonGetPlayersNameForm>({
+    defaultValues: {
+      players: Array(5).fill({ name: "" }),
+    },
+  });
   const players = watch("players");
   const { append, remove, fields } = useFieldArray({
     control,
     name: "players",
   });
 
-  const onSubmit = async (data: AvalonGetPlayersNameForm) => {
-    console.log({ data });
+  // Get available roles based on number of players
+  const getAvailableRoles = (playerCount: number) => {
+    const roles = [...AVALON_ROLES];
+    // Always include Merlin, Assassin, and Morgana
+    const baseRoles = roles.filter((role) =>
+      ["Merlin", "Assassin", "Morgana"].includes(role.name)
+    );
+
+    // Add Percival for 6+ players
+    if (playerCount >= 6) {
+      baseRoles.push(roles.find((role) => role.name === "Percival")!);
+    }
+
+    // Add Devil for 7+ players
+    if (playerCount >= 7) {
+      baseRoles.push(roles.find((role) => role.name === "Devil")!);
+    }
+
+    // Add required number of Loyal Servants
+    const loyalServantsNeeded = playerCount - baseRoles.length;
+    const loyalServants = roles
+      .filter((role) => role.name === "Loyal Servant")
+      .slice(0, loyalServantsNeeded);
+
+    return [...baseRoles, ...loyalServants];
+  };
+
+  const onSubmit = (data: AvalonGetPlayersNameForm) => {
+    // Validate that all names are unique
+    const names = data.players.map((p) => p.name);
+    const uniqueNames = new Set(names);
+    if (uniqueNames.size !== names.length) {
+      alert("All player names must be unique!");
+      return;
+    }
+
+    // Get available roles for current player count
+    const availableRoles = getAvailableRoles(numberOfPlayers);
+
+    // Shuffle roles
+    const shuffledRoles = [...availableRoles].sort(() => Math.random() - 0.5);
+
+    // Create players with assigned roles
+    const gamePlayers: AvalonPlayer[] = data.players.map((player, index) => ({
+      playerName: player.name,
+      roleName: shuffledRoles[index].name,
+      isEvil: shuffledRoles[index].isEvil,
+      imgUrl: shuffledRoles[index].imgUrl,
+
+      // ...shuffledRoles[index],
+    }));
+
+    setPlayers(gamePlayers);
+    setGameStep("show-roles");
   };
 
   // Handle number of players change
@@ -28,7 +86,7 @@ const ChoosePlayers = () => {
     // If the number of players is increased, append new empty fields
     if (newNumPlayers > players.length) {
       for (let i = players.length; i < newNumPlayers; i++) {
-        append({ name: `بازیکن-${i + 1}` });
+        append({ name: "" });
       }
     }
 
@@ -41,49 +99,78 @@ const ChoosePlayers = () => {
   };
 
   return (
-    <div>
-      <h1 className="mb-2">Avalon</h1>
-      <fieldset className="fieldset">
-        <legend className="fieldset-legend">تعداد بازیکنان</legend>
-        <select
-          value={numberOfPlayers}
-          className="select select-primary select-sm"
-          onChange={handleNumPlayersChange}
-        >
-          {NUMBER_OF_PLAYERS.map((num) => (
-            <option key={num} value={num}>
-              {num}
-            </option>
-          ))}
-        </select>
-      </fieldset>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        {fields.map((field, index) => (
-          <div key={field.id} className="flex flex-col gap-1">
-            <label
-              htmlFor={`players[${index}].name`}
-              className="font-semibold text-sm"
+    <div className="max-w-4xl mx-auto p-4">
+      <h1 className="text-3xl font-bold text-center mb-8">Avalon</h1>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="space-y-6">
+          <fieldset className="border rounded-lg p-4">
+            <legend className="text-lg font-semibold px-2">
+              Number of Players
+            </legend>
+            <select
+              value={numberOfPlayers}
+              className="w-full p-2 border rounded-md"
+              onChange={handleNumPlayersChange}
             >
-              بازیکن
-            </label>
-            <Controller
-              name={`players.${index}.name`}
-              control={control}
-              defaultValue={field.name}
-              render={({ field }) => (
-                <input
-                  {...field}
-                  placeholder={`نام بازیکن...`}
-                  className="input input-primary input-md"
-                />
-              )}
-            />
+              {NUMBER_OF_PLAYERS.map((num) => (
+                <option key={num} value={num}>
+                  {num} Players
+                </option>
+              ))}
+            </select>
+          </fieldset>
+
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {fields.map((field, index) => (
+                <div key={field.id} className="space-y-1">
+                  <label
+                    htmlFor={`players[${index}].name`}
+                    className="block font-medium"
+                  >
+                    Player {index + 1}
+                  </label>
+                  <Controller
+                    name={`players.${index}.name`}
+                    control={control}
+                    rules={{ required: "Name is required" }}
+                    render={({ field, fieldState }) => (
+                      <div>
+                        <input
+                          {...field}
+                          placeholder="Enter player name..."
+                          className="w-full p-2 border rounded-md"
+                        />
+                        {fieldState.error && (
+                          <span className="text-red-500 text-sm">
+                            {fieldState.error.message}
+                          </span>
+                        )}
+                      </div>
+                    )}
+                  />
+                </div>
+              ))}
+            </div>
+            <button
+              type="submit"
+              className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors"
+            >
+              Start Game
+            </button>
+          </form>
+        </div>
+
+        {/* <div className="space-y-4">
+          <h2 className="text-xl font-semibold">Available Roles</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+            {getAvailableRoles(numberOfPlayers).map((role) => (
+              <CharacterCard key={role.id} {...role} />
+            ))}
           </div>
-        ))}
-        <button className="btn btn-primary" type="submit">
-          شروع
-        </button>
-      </form>
+        </div> */}
+      </div>
     </div>
   );
 };
