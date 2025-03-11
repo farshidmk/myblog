@@ -80,3 +80,16 @@ model Authenticator {
 
   @@id([userId, credentialID])
 }
+
+model SpyGameWordCategory {
+  id    String        @id @default(cuid())
+  name  String
+  words SpyGameWord[]
+}
+
+model SpyGameWord {
+  id         String              @id @default(cuid())
+  word       String
+  categoryId String
+  category   SpyGameWordCategory @relation(fields: [categoryId], references: [id])
+}
