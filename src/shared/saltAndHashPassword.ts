@@ -16,6 +16,7 @@ export const saltAndHashPassword = async (
     const hashedPassword = await bcrypt.hash(password, salt); // Hash the password with the salt
     return hashedPassword;
   } catch (error) {
+    console.log(error);
     throw new Error("Error hashing password");
   }
 };

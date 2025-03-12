@@ -131,11 +131,11 @@ const InGame = () => {
                 className="p-4 rounded-lg border-2 border-green-200 hover:border-green-500 hover:bg-green-50 transition-all"
               >
                 <div className="flex flex-col items-center space-y-2">
-                  <img
+                  {/* <img
                     src="/images/avalon/chooseSuccess.png"
                     alt="Success"
                     className="w-16 h-16"
-                  />
+                  /> */}
                   <p className="font-medium text-green-600">Success</p>
                 </div>
               </button>
@@ -146,11 +146,11 @@ const InGame = () => {
                 className="p-4 rounded-lg border-2 border-red-200 hover:border-red-500 hover:bg-red-50 transition-all"
               >
                 <div className="flex flex-col items-center space-y-2">
-                  <img
+                  {/* <img
                     src="/images/avalon/chooseDefeat.png"
                     alt="Fail"
                     className="w-16 h-16"
-                  />
+                  /> */}
                   <p className="font-medium text-red-600">Fail</p>
                 </div>
               </button>

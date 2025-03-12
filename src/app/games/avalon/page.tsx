@@ -3,7 +3,7 @@ import React from "react";
 import { useAvalonGame } from "./AvalonProvider";
 import ChoosePlayers from "./components/ChoosePlayers";
 import ShowRoles from "./components/ShowRoles";
-import InGame from "./components/InGame";
+// import InGame from "./components/InGame";
 import GameBoard from "./components/GameBoard";
 
 //https://tgmafia.com/how-play-avalon/

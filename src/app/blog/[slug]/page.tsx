@@ -40,11 +40,12 @@ interface Frontmatter {
 export default async function ProjectPage({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
+  const slug = (await params).slug;
   //   const content = await fs.readFile(path.join(process.cwd(), 'src/projects', `${params.slug}.mdx`), 'utf-8');
   const content = await fs.readFile(
-    path.join(process.cwd(), "src/blog", `${params.slug}.mdx`),
+    path.join(process.cwd(), "src/blog", `${slug}.mdx`),
     "utf-8"
   );
   const data = await compileMDX<Frontmatter>({

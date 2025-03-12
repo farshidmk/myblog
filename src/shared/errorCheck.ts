@@ -1,3 +1,6 @@
-export function isKnownError(error: any): error is KnownError {
-  return error && typeof error.message === "string";
+export function isKnownError(error: unknown): error is KnownError {
+  if (typeof error === "object" && error !== null) {
+    return "message" in error;
+  }
+  return false;
 }

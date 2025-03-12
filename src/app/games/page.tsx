@@ -1,8 +1,6 @@
 import React from "react";
 
-type Props = {};
-
-const GamePage = (props: Props) => {
+const GamePage = () => {
   return <div>GamePage</div>;
 };
 

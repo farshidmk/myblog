@@ -4,7 +4,7 @@ import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { AvalonGetPlayersNameForm, AvalonPlayer } from "../avalon-types";
 import { AVALON_ROLES } from "../avalon-shared";
 import { useAvalonGame } from "../AvalonProvider";
-import CharacterCard from "./CharacterCard";
+// import CharacterCard from "./CharacterCard";
 
 const ChoosePlayers = () => {
   const { setPlayers, setGameStep } = useAvalonGame();

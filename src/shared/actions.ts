@@ -49,6 +49,7 @@ export async function credentialsLogin(password: string, username: string) {
     });
     return res;
   } catch (error) {
+    console.log(error);
     return { error: "خطا!!" };
   }
 }

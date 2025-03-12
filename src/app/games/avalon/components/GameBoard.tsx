@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAvalonGame } from "../AvalonProvider";
-import { MISSION_REQUIREMENTS } from "../avalon-shared";
+// import { MISSION_REQUIREMENTS } from "../avalon-shared";
 import Missions from "./Missions";
 import TeamSelection from "./TeamSelection";
 import MissionVote from "./MissionVote";
@@ -13,15 +13,15 @@ const GameBoard = () => {
     missions,
     leaderIndex,
     currentProposal,
-    setCurrentProposal,
-    setMissions,
-    setCurrentMission,
+    // setCurrentProposal,
+    // setMissions,
+    // setCurrentMission,
     setLeaderIndex,
   } = useAvalonGame();
-  const requirements =
-    MISSION_REQUIREMENTS[players.length as keyof typeof MISSION_REQUIREMENTS];
-  const currentMissionTeamSize = requirements.team[currentMission - 1];
-  const requiredFails = requirements.fails[currentMission - 1];
+  // const requirements =
+  //   MISSION_REQUIREMENTS[players.length as keyof typeof MISSION_REQUIREMENTS];
+  // const currentMissionTeamSize = requirements.team[currentMission - 1];
+  // const requiredFails = requirements.fails[currentMission - 1];
   const [playersInVote, setPlayersInVote] = useState<string[]>([]);
   useEffect(() => {
     if (showMission) {

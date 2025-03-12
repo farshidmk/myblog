@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useAvalonGame } from "../AvalonProvider";
 import { AvalonPlayer } from "../avalon-types";
+import Image from "next/image";
 
 const ShowRoles = () => {
   const { players, setGameStep } = useAvalonGame();
@@ -74,9 +75,11 @@ const ShowRoles = () => {
   }) => (
     <div className="space-y-6">
       <div className="flex flex-col items-center space-y-4">
-        <img
+        <Image
           src={player.imgUrl}
           alt={player.roleName}
+          width={128}
+          height={128}
           className="w-32 h-32 object-cover rounded-full border-4 border-blue-500"
         />
         <h3 className="text-xl font-semibold">{player.roleName}</h3>
@@ -98,9 +101,11 @@ const ShowRoles = () => {
                 key={teammate.playerName}
                 className="flex flex-col items-center p-2 bg-gray-50 rounded-lg"
               >
-                <img
+                <Image
                   src={teammate.imgUrl}
                   alt={teammate.roleName}
+                  width={64}
+                  height={64}
                   className="w-16 h-16 object-cover rounded-full"
                 />
                 <p className="text-sm font-medium mt-1">

@@ -22,7 +22,7 @@ const SignUp = () => {
   // Handle form submission
   const onSubmit = async (data: SignUpForm) => {
     try {
-      const dbRes = await signUp({ ...data });
+      await signUp({ ...data });
     } catch (error) {
       console.log(error);
     }

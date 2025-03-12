@@ -3,11 +3,12 @@ import { NextResponse } from "next/server";
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const id = (await params).id;
   await prisma.spyGameWord.delete({
     where: {
-      id: params.id,
+      id: id,
     },
   });
   return NextResponse.json({ message: "Deleted successfully" });
