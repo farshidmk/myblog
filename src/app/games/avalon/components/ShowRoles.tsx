@@ -20,8 +20,8 @@ const ShowRoles = () => {
     // Initialize sound effects
     setShowSound(new Audio("/sounds/avalon/show.mp3"));
     setHideSound(new Audio("/sounds/avalon/hide.mp3"));
-    setNextPlayerSound(new Audio("/sounds/avalon/next-player.mp3"));
-    setPreviousPlayerSound(new Audio("/sounds/avalon/previous-player.mp3"));
+    setNextPlayerSound(new Audio("/sounds/avalon/next-player.wav"));
+    setPreviousPlayerSound(new Audio("/sounds/avalon/previous-player.wav"));
   }, []);
 
   const currentPlayer = players[currentPlayerIndex];

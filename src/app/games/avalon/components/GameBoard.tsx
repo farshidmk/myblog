@@ -6,14 +6,8 @@ import MissionVote from "./MissionVote";
 
 const GameBoard = () => {
   const [showMission, setShowMission] = useState(false);
-  const {
-    players,
-    currentMission,
-    missions,
-    leaderIndex,
-    currentProposal,
-    setLeaderIndex,
-  } = useAvalonGame();
+  const { players, currentMission, missions, leaderIndex, setLeaderIndex } =
+    useAvalonGame();
   const [playersInVote, setPlayersInVote] = useState<string[]>([]);
   useEffect(() => {
     if (showMission) {
@@ -21,13 +15,6 @@ const GameBoard = () => {
     }
   }, [currentMission, missions, showMission]);
 
-  console.log({
-    players,
-    currentMission,
-    missions,
-    leaderIndex,
-    currentProposal,
-  });
   useEffect(() => {
     if (leaderIndex === -1) {
       const randomIndex = Math.floor(Math.random() * players.length);
@@ -37,7 +24,7 @@ const GameBoard = () => {
 
   return (
     <div
-      className="max-w-lg w-full mx-auto"
+      className="max-w-lg w-full mx-auto relative"
       // style={{
       //   backgroundImage:
       // }}

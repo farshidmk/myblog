@@ -27,6 +27,9 @@ export type Mission = {
   requiredFails: number;
   result?: "success" | "fail";
   team?: string[];
+  /**
+   * Votes for the mission name of the player and the result of the mission true is for success and false is for fail
+   */
   votes?: Record<string, boolean>;
 };
 
