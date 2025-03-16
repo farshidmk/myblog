@@ -2,9 +2,12 @@
 import React, { useState } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { AvalonGetPlayersNameForm, AvalonPlayer } from "../avalon-types";
-import { AVALON_ROLES } from "../avalon-shared";
+import {
+  AVAILABLE_ROLES_BY_PLAYERS_COUNT,
+  AVALON_ROLES,
+} from "../avalon-shared";
 import { useAvalonGame } from "../AvalonProvider";
-// import CharacterCard from "./CharacterCard";
+import CharacterCard from "./CharacterCard";
 
 const ChoosePlayers = () => {
   const { setPlayers, setGameStep } = useAvalonGame();
@@ -22,29 +25,9 @@ const ChoosePlayers = () => {
 
   // Get available roles based on number of players
   const getAvailableRoles = (playerCount: number) => {
+    const availableRoles = AVAILABLE_ROLES_BY_PLAYERS_COUNT[playerCount];
     const roles = [...AVALON_ROLES];
-    // Always include Merlin, Assassin, and Morgana
-    const baseRoles = roles.filter((role) =>
-      ["Merlin", "Assassin", "Morgana"].includes(role.name)
-    );
-
-    // Add Percival for 6+ players
-    if (playerCount >= 6) {
-      baseRoles.push(roles.find((role) => role.name === "Percival")!);
-    }
-
-    // Add Devil for 7+ players
-    if (playerCount >= 7) {
-      baseRoles.push(roles.find((role) => role.name === "Devil")!);
-    }
-
-    // Add required number of Loyal Servants
-    const loyalServantsNeeded = playerCount - baseRoles.length;
-    const loyalServants = roles
-      .filter((role) => role.name === "Loyal Servant")
-      .slice(0, loyalServantsNeeded);
-
-    return [...baseRoles, ...loyalServants];
+    return availableRoles.map((role) => roles.find((r) => r.name === role)!);
   };
 
   const onSubmit = (data: AvalonGetPlayersNameForm) => {
@@ -68,8 +51,6 @@ const ChoosePlayers = () => {
       roleName: shuffledRoles[index].name,
       isEvil: shuffledRoles[index].isEvil,
       imgUrl: shuffledRoles[index].imgUrl,
-
-      // ...shuffledRoles[index],
     }));
 
     setPlayers(gamePlayers);
@@ -162,14 +143,17 @@ const ChoosePlayers = () => {
           </form>
         </div>
 
-        {/* <div className="space-y-4">
+        <div className="space-y-4">
           <h2 className="text-xl font-semibold">Available Roles</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+          <div
+            className="grid grid-cols-2 sm:grid-cols-3 gap-4"
+            key={numberOfPlayers}
+          >
             {getAvailableRoles(numberOfPlayers).map((role) => (
               <CharacterCard key={role.id} {...role} />
             ))}
           </div>
-        </div> */}
+        </div>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { AvalonRole } from "./avalon-types";
+import { AvalonRole, AvalonRoleName } from "./avalon-types";
 import { z } from "zod";
 
 export const AVALON_ROLES: AvalonRole[] = [
@@ -35,35 +35,47 @@ export const AVALON_ROLES: AvalonRole[] = [
   },
   {
     id: 10,
-    name: "Mordered",
+    name: "Mordred",
     isEvil: true,
-    imgUrl: "/public/images/avalon/percival.png",
+    imgUrl: "/images/avalon/mordred.png",
   },
   {
     id: 6,
     name: "Loyal Servant",
     isEvil: false,
-    imgUrl: "/images/avalon/royalServant.png",
+    imgUrl: "/images/avalon/loyalServant.png",
+  },
+  // {
+  //   id: 7,
+  //   name: "Loyal Servant",
+  //   isEvil: false,
+  //   imgUrl: "/images/avalon/loyalServant.png",
+  // },
+  // {
+  //   id: 8,
+  //   name: "Loyal Servant",
+  //   isEvil: false,
+  //   imgUrl: "/images/avalon/loyalServant.png",
+  // },
+  // {
+  //   id: 9,
+  //   name: "Loyal Servant",
+  //   isEvil: false,
+  //   imgUrl: "/images/avalon/loyalServant.png",
+  // },
+  {
+    id: 11,
+    name: "Oberon",
+    isEvil: true,
+    imgUrl: "/images/avalon/oberon.png",
   },
   {
-    id: 7,
-    name: "Loyal Servant",
+    id: 12,
+    name: "King Arthur",
     isEvil: false,
-    imgUrl: "/images/avalon/royalServant.png",
+    imgUrl: "/images/avalon/kingArthur.png",
   },
-  {
-    id: 8,
-    name: "Loyal Servant",
-    isEvil: false,
-    imgUrl: "/images/avalon/royalServant.png",
-  },
-  {
-    id: 9,
-    name: "Loyal Servant",
-    isEvil: false,
-    imgUrl: "/images/avalon/royalServant.png",
-  },
-];
+] as const;
 
 export const avalonGameUsersInputValidation = z.object({
   name: z.string().min(1, "نام بازیکن را وارد کنید"),
@@ -76,4 +88,64 @@ export const MISSION_REQUIREMENTS = {
   8: { team: [3, 4, 4, 5, 5], fails: [1, 1, 1, 2, 1] },
   9: { team: [3, 4, 4, 5, 5], fails: [1, 1, 1, 2, 1] },
   10: { team: [3, 4, 4, 5, 5], fails: [1, 1, 1, 2, 1] },
+};
+
+/**
+ * Available roles for each number of players
+ */
+export const AVAILABLE_ROLES_BY_PLAYERS_COUNT: Record<
+  number,
+  AvalonRoleName[]
+> = {
+  5: ["Mordred", "Assassin", "Merlin", "Loyal Servant", "Loyal Servant"],
+  6: [
+    "Assassin",
+    "Morgana",
+    "Merlin",
+    "Percival",
+    "Loyal Servant",
+    "Loyal Servant",
+  ],
+  7: [
+    "Oberon",
+    "Assassin",
+    "Morgana",
+    "Merlin",
+    "Percival",
+    "Loyal Servant",
+    "Loyal Servant",
+  ],
+  8: [
+    "Devil",
+    "Assassin",
+    "Morgana",
+    "Merlin",
+    "Percival",
+    "Loyal Servant",
+    "Loyal Servant",
+    "Loyal Servant",
+  ],
+  9: [
+    "Mordred",
+    "Assassin",
+    "Morgana",
+    "Merlin",
+    "Percival",
+    "Loyal Servant",
+    "Loyal Servant",
+    "Loyal Servant",
+    "Loyal Servant",
+  ],
+  10: [
+    "Mordred",
+    "Oberon",
+    "Assassin",
+    "Morgana",
+    "Merlin",
+    "Percival",
+    "Loyal Servant",
+    "Loyal Servant",
+    "Loyal Servant",
+    "King Arthur",
+  ],
 };

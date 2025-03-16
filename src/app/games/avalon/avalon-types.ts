@@ -1,6 +1,16 @@
+export type AvalonRoleName =
+  | "Merlin"
+  | "Morgana"
+  | "Percival"
+  | "Assassin"
+  | "Devil"
+  | "Mordred"
+  | "Loyal Servant"
+  | "Oberon"
+  | "King Arthur";
 export type AvalonRole = {
   id: number;
-  name: string;
+  name: AvalonRoleName;
   isEvil: boolean;
   imgUrl: string;
 };
