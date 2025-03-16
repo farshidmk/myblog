@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useAvalonGame } from "../AvalonProvider";
-// import { MISSION_REQUIREMENTS } from "../avalon-shared";
 import Missions from "./Missions";
 import TeamSelection from "./TeamSelection";
 import MissionVote from "./MissionVote";
@@ -13,15 +12,8 @@ const GameBoard = () => {
     missions,
     leaderIndex,
     currentProposal,
-    // setCurrentProposal,
-    // setMissions,
-    // setCurrentMission,
     setLeaderIndex,
   } = useAvalonGame();
-  // const requirements =
-  //   MISSION_REQUIREMENTS[players.length as keyof typeof MISSION_REQUIREMENTS];
-  // const currentMissionTeamSize = requirements.team[currentMission - 1];
-  // const requiredFails = requirements.fails[currentMission - 1];
   const [playersInVote, setPlayersInVote] = useState<string[]>([]);
   useEffect(() => {
     if (showMission) {
@@ -44,9 +36,15 @@ const GameBoard = () => {
   }, [leaderIndex, players.length, setLeaderIndex]);
 
   return (
-    <div>
-      <div className="flex flex-col items-center justify-center">
-        {players[leaderIndex].playerName}
+    <div
+      className="max-w-lg w-full mx-auto"
+      // style={{
+      //   backgroundImage:
+      // }}
+    >
+      <div className="flex gap-2 items-center justify-center">
+        <h2 className="text-2xl font-bold">لیدر: </h2>
+        <p className="text-lg">{players[leaderIndex].playerName}</p>
       </div>
       <TeamSelection setShowMission={setShowMission} />
       <Missions />
