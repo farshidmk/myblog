@@ -17,7 +17,7 @@ export type AvalonRole = {
 
 export type AvalonPlayer = {
   playerName: string;
-  roleName: string;
+  roleName: AvalonRoleName;
   isEvil: boolean;
   imgUrl: string;
 };
