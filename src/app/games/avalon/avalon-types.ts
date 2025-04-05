@@ -53,7 +53,12 @@ export type AvalonContext = {
   /**
    * Active game step
    */
-  gameStep: "choose-players" | "show-roles" | "in-game" | "show-result";
+  gameStep:
+    | "choose-players"
+    | "show-roles"
+    | "in-game"
+    | "guess-role"
+    | "show-result";
 
   /**
    * Set game step
