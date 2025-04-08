@@ -16,6 +16,7 @@ const GameBoard = () => {
     setMissions,
     setCurrentMission,
     setGameStep,
+    setWinner,
   } = useAvalonGame();
   const requirements =
     MISSION_REQUIREMENTS[players.length as keyof typeof MISSION_REQUIREMENTS];
@@ -85,6 +86,7 @@ const GameBoard = () => {
         }
       });
       if (numberOfSuccess >= 3 || numberOfFail >= 3) {
+        setWinner(numberOfSuccess >= 3 ? "good" : "evil");
         setGameStep("guess-role");
       }
 
@@ -99,6 +101,7 @@ const GameBoard = () => {
     setGameStep,
     setMissions,
     showMission,
+    setWinner,
   ]);
 
   return (

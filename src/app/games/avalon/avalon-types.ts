@@ -114,6 +114,15 @@ export type AvalonContext = {
    * Set leader index
    */
   setLeaderIndex: React.Dispatch<React.SetStateAction<number>>;
+
+  /**
+   * Winner team
+   */
+  winner: "evil" | "good" | undefined;
+  /**
+   * Set Winner
+   */
+  setWinner: React.Dispatch<React.SetStateAction<AvalonContext["winner"]>>;
 };
 
 export type AvalonGetPlayersNameForm = { players: { name: string }[] };
