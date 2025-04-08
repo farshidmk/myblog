@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import { useAvalonGame } from "../AvalonProvider";
 import Missions from "./Missions";
@@ -14,6 +15,7 @@ const GameBoard = () => {
     setLeaderIndex,
     setMissions,
     setCurrentMission,
+    setGameStep,
   } = useAvalonGame();
   const requirements =
     MISSION_REQUIREMENTS[players.length as keyof typeof MISSION_REQUIREMENTS];
@@ -58,9 +60,35 @@ const GameBoard = () => {
           numberOfDefeatVotes >= requirements.fails[currentMission - 1]
             ? "fail"
             : "success";
-        return p;
+
+        //calculate the result of the mission
+        const numberOfSuccess = p.filter(
+          (mission) => mission.result === "success"
+        ).length;
+        const numberOfFail = p.filter(
+          (mission) => mission.result === "fail"
+        ).length;
+        if (numberOfSuccess >= 3 || numberOfFail >= 3) {
+          setGameStep("guess-role");
+        }
+        return [...p];
       });
-      setCurrentMission(currentMission + 1);
+
+      // check winner if exist
+      let numberOfSuccess = 0;
+      let numberOfFail = 0;
+      missions?.forEach((mission) => {
+        if (mission.result === "fail") {
+          numberOfFail++;
+        } else if (mission.result === "success") {
+          numberOfSuccess++;
+        }
+      });
+      if (numberOfSuccess >= 3 || numberOfFail >= 3) {
+        setGameStep("guess-role");
+      }
+
+      setCurrentMission((p) => p + 1);
     }
   }, [
     currentMission,
@@ -68,6 +96,7 @@ const GameBoard = () => {
     playersInVote,
     requirements.fails,
     setCurrentMission,
+    setGameStep,
     setMissions,
     showMission,
   ]);
