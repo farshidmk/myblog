@@ -6,6 +6,7 @@ import ShowRoles from "./components/ShowRoles";
 // import InGame from "./components/InGame";
 import GameBoard from "./components/GameBoard";
 import GuessRoles from "./components/GuessRoles";
+import GameResult from "./components/GameResult";
 
 //https://tgmafia.com/how-play-avalon/
 
@@ -23,7 +24,7 @@ const AvalonGame = () => {
       case "guess-role":
         return <GuessRoles />;
       case "show-result":
-        return <div>Game results...</div>;
+        return <GameResult />;
       default:
         return <div>Unknown game state</div>;
     }

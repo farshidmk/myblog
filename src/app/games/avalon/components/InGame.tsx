@@ -76,8 +76,6 @@ const InGame = () => {
     // Update missions array
     const newMissions = [...missions];
     newMissions[currentMission - 1] = {
-      teamSize: currentMissionTeamSize,
-      requiredFails,
       result: missionSuccess ? "success" : "fail",
       team: selectedTeam,
       votes: missionVotes,
