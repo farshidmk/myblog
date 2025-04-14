@@ -3,14 +3,16 @@ import { useEffect, useState } from "react";
 import AddNewCategory from "./_components/AddNewCategory";
 import CategoryCard from "./_components/CategoryCard";
 import { GameSettingCategoryWithWordsCount } from "./gameSetting-type";
+import EditCategory from "./_components/EditCategory";
+import { GameWordCategory } from "@prisma/client";
 
 const GameSettingPage = () => {
   const [allCategories, setAllCategories] = useState<
     GameSettingCategoryWithWordsCount[]
   >([]);
   const [status, setStatus] = useState<ActionResponseStatus>("idle");
-  const [selectedCategoryId, setSelectedCategoryId] = useState<
-    string | undefined
+  const [selectedCategory, setSelectedCategory] = useState<
+    GameWordCategory | undefined
   >(undefined);
   useEffect(() => {
     async function getAllGameWordCategory() {
@@ -35,7 +37,7 @@ const GameSettingPage = () => {
             <CategoryCard
               key={category.id}
               category={category}
-              handleOnEdit={(id) => setSelectedCategoryId(id)}
+              handleOnEdit={(cat) => setSelectedCategory(cat)}
             />
           ))}
           <AddNewCategory />
@@ -43,6 +45,7 @@ const GameSettingPage = () => {
       ) : (
         <h1>خطایی رخ داده است</h1>
       )}
+      {selectedCategory && <EditCategory category={selectedCategory} />}
     </div>
   );
 };

@@ -1,12 +1,13 @@
 import React from "react";
 import { GameSettingCategoryWithWordsCount } from "../gameSetting-type";
 import { Pencil } from "lucide-react";
+import { GameWordCategory } from "@prisma/client";
 
 const CategoryCard = ({
   handleOnEdit,
   category: { id, name, wordsCount },
 }: {
-  handleOnEdit: (id: GameSettingCategoryWithWordsCount["id"]) => void;
+  handleOnEdit: (category: GameWordCategory) => void;
   category: GameSettingCategoryWithWordsCount;
 }) => {
   return (
@@ -19,7 +20,7 @@ const CategoryCard = ({
 
         <button
           className="btn btn-sm btn-ghost"
-          onClick={() => handleOnEdit(id)}
+          onClick={() => handleOnEdit({ id, name })}
         >
           <Pencil className="h-5 w-5 text-primary hover:text-primary-focus" />
         </button>
