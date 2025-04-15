@@ -77,7 +77,7 @@ const ShowRoles = () => {
   };
 
   return (
-    <div className="min-h-screen flex  bg-gray-100 p-2">
+    <div className="min-h-screen flex justify-center bg-gray-100 p-2">
       <div className="max-w-lg w-full space-y-1">
         {/* Current player role view */}
         <div className="bg-white rounded-xl shadow-lg p-4 space-y-6">

@@ -6,7 +6,7 @@ import Image from "next/image";
 
 const Missions = () => {
   return (
-    <div className="p-1 flex flex-col gap-2 w-full h-full relative">
+    <div className="p-2 flex flex-col gap-2 w-full h-full relative ">
       <Image
         src={"/images/avalon/gameBoardBG.png"}
         alt={"avalon bg"}
@@ -36,23 +36,53 @@ const MissionCard = ({ missionNumber }: { missionNumber: number }) => {
 
   return (
     <div
-      className={`bg-none backdrop-blur-md
-            relative p-4 rounded-xl shadow-lg
-            ${
-              isCurrentMission
-                ? "bg-blue-50 border-2 border-blue-500"
-                : "bg-white"
-            }
-            ${mission?.result === "success" ? "bg-green-50" : ""}
-            ${mission?.result === "fail" ? "bg-red-50" : ""}
+      className={`bg-none backdrop-blur-md      
+        relative p-4 rounded-xl shadow-lg border-2
+      ${isCurrentMission ? " border-blue-500" : " border-blue-950"}
+       ${
+         mission?.result === "success"
+           ? "bg-green-500 border-green-500"
+           : mission?.result === "fail"
+           ? "bg-red-500 border-red-500"
+           : ""
+       }
           `}
     >
+      <Image
+        src={`/images/avalon/${
+          mission?.result === "success"
+            ? "successBg.webp"
+            : mission?.result === "fail"
+            ? "failureBg.webp"
+            : "gameBoardBG.png"
+        }`}
+        alt={"avalon bg"}
+        width={500}
+        height={600}
+        className={`object-cover absolute top-0 left-0 w-full h-full -z-20`}
+      />
       <div className="text-center">
-        <h3 className="text-xl font-bold mb-2">ماموریت {missionNumber}</h3>
+        <h3
+          className={`${
+            mission?.result ? "backdrop-blur-sm  p-1 rounded-sm" : ""
+          } text-xl font-bold mb-2`}
+        >
+          ماموریت {missionNumber}
+        </h3>
         <div className="space-y-2">
-          <p className="text-sm text-gray-600">
-            تعداد نفرات: {teamSize.toLocaleString("fa")}
-          </p>
+          {mission?.result ? (
+            <div className="flex items-center justify-center gap-1 flex-wrap">
+              {mission.team?.map((p) => (
+                <div key={p} className="p-1 rounded text-xs bg-slate-200">
+                  {p}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-sm font-semibold text-gray-900 p-1 bg-gray-300 rounded-sm text-center w-fit">
+              تعداد نفرات: {teamSize.toLocaleString("fa")}
+            </p>
+          )}
 
           <div
             className={`tooltip tooltip-info tooltip-${

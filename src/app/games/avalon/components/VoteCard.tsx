@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useAvalonGame } from "../AvalonProvider";
+import Image from "next/image";
 
 type Props = {
   playerName: string;
@@ -30,20 +31,32 @@ const VoteCard = ({ playerName, handleSubmitVote }: Props) => {
       <h3 className="text-2xl font-bold text-gray-800">{player?.playerName}</h3>
       <div className="flex gap-2 items-center justify-center">
         <button
-          className="flex-1 flex items-end justify-center px-2 sm:w-48 h-32 sm:h-48 m-2 bg-contain bg-center bg-no-repeat hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg border-2 border-gold hover:border-4 hover:shadow-2xl"
-          style={{ backgroundImage: "url('/images/avalon/chooseSuccess.png')" }}
+          className="relative flex-1 flex items-end justify-center px-2 sm:w-48 h-32 sm:h-48 m-2 bg-contain bg-center bg-no-repeat hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg border-2 border-gold hover:border-4 hover:shadow-2xl"
           onClick={() => handleVote(true)}
         >
-          <span className="text-2xl font-bold text-green-500 bg-gray-100 rounded-md">
+          <Image
+            src={"/images/avalon/chooseSuccess.png"}
+            alt={"avalon bg"}
+            width={500}
+            height={600}
+            className={`object-cover absolute top-0 left-0 w-full h-full `}
+          />
+          <span className="absolute -bottom-2 text-2xl font-bold text-green-500 bg-gray-100 rounded-md">
             موفقیت
           </span>
         </button>
         <button
-          className="flex-1 flex items-end justify-center px-2 sm:w-48 h-32 sm:h-48 m-2 bg-contain bg-center bg-no-repeat hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg border-2 border-gold hover:border-4 hover:shadow-2xl"
-          style={{ backgroundImage: "url('/images/avalon/chooseDefeat.png')" }}
+          className="relative flex-1 flex items-end justify-center px-2 sm:w-48 h-32 sm:h-48 m-2 bg-contain bg-center bg-no-repeat hover:scale-105 transition-transform duration-300 rounded-lg shadow-lg border-2 border-gold hover:border-4 hover:shadow-2xl"
           onClick={() => handleVote(false)}
         >
-          <span className="text-2xl font-bold text-red-700 bg-gray-200 rounded-md">
+          <Image
+            src={"/images/avalon/chooseDefeat.png"}
+            alt={"avalon bg"}
+            width={500}
+            height={600}
+            className={`object-cover absolute top-0 left-0 w-full h-full `}
+          />
+          <span className="absolute -bottom-2 text-2xl font-bold text-red-700 bg-gray-200 rounded-md">
             شکست
           </span>
         </button>
