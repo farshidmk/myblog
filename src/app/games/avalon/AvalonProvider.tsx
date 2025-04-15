@@ -24,6 +24,7 @@ export const AvalonGameContext = React.createContext<AvalonContext>({
   setLeaderIndex: () => {},
   winner: undefined,
   setWinner: () => {},
+  resetGame: () => {}, //TODO: reset with sane players
 });
 
 type Props = {
@@ -32,10 +33,8 @@ type Props = {
 
 const AvalonProvider = ({ children }: Props) => {
   // Basic game state
-  // const [players, setPlayers] = useState<AvalonPlayer[]>(mockPlayers);
   const [players, setPlayers] = useState<AvalonPlayer[]>([]);
   const [gameStep, setGameStep] =
-    // useState<AvalonContext["gameStep"]>("in-game");
     useState<AvalonContext["gameStep"]>("choose-players");
 
   const [winner, setWinner] = useState<AvalonContext["winner"]>(undefined);
@@ -50,6 +49,17 @@ const AvalonProvider = ({ children }: Props) => {
   );
   const [failedProposals, setFailedProposals] = useState<number>(0);
   const [leaderIndex, setLeaderIndex] = useState<number>(0);
+
+  function resetGame() {
+    setPlayers([]);
+    setGameStep("choose-players");
+    setWinner(undefined);
+    setCurrentMission(1);
+    setMissions([]);
+    setCurrentProposal(null);
+    setFailedProposals(0);
+    setLeaderIndex(0);
+  }
 
   return (
     <AvalonGameContext.Provider
@@ -70,6 +80,7 @@ const AvalonProvider = ({ children }: Props) => {
         setLeaderIndex,
         winner,
         setWinner,
+        resetGame,
       }}
     >
       {children}
@@ -86,66 +97,3 @@ export function useAvalonGame() {
   }
   return context;
 }
-
-const mockPlayers: AvalonPlayer[] = [
-  {
-    playerName: "1",
-    roleName: "Morgana",
-    isEvil: true,
-    imgUrl: "/images/avalon/morgana.png",
-  },
-  {
-    playerName: "2",
-    roleName: "Mordred",
-    isEvil: true,
-    imgUrl: "/images/avalon/mordred.png",
-  },
-  {
-    playerName: "3",
-    roleName: "Percival",
-    isEvil: false,
-    imgUrl: "/images/avalon/percival.png",
-  },
-  {
-    playerName: "4",
-    roleName: "Oberon",
-    isEvil: true,
-    imgUrl: "/images/avalon/oberon.png",
-  },
-  {
-    playerName: "5",
-    roleName: "Loyal Servant",
-    isEvil: false,
-    imgUrl: "/images/avalon/loyalServant.png",
-  },
-  {
-    playerName: "6",
-    roleName: "Assassin",
-    isEvil: true,
-    imgUrl: "/images/avalon/assassin.png",
-  },
-  {
-    playerName: "7",
-    roleName: "Merlin",
-    isEvil: false,
-    imgUrl: "/images/avalon/merlin.png",
-  },
-  {
-    playerName: "8",
-    roleName: "King Arthur",
-    isEvil: false,
-    imgUrl: "/images/avalon/kingArthur.png",
-  },
-  {
-    playerName: "9",
-    roleName: "Loyal Servant",
-    isEvil: false,
-    imgUrl: "/images/avalon/loyalServant.png",
-  },
-  {
-    playerName: "10",
-    roleName: "Loyal Servant",
-    isEvil: false,
-    imgUrl: "/images/avalon/loyalServant.png",
-  },
-];
