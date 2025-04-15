@@ -16,7 +16,7 @@ const GameResult = () => {
         {isEvilWin ? " شر " : " خیر "}
         برنده بازی است
       </h3>
-      <div className="flex flex-col gap-2 items-center justify-center w-full">
+      <div className="flex flex-col gap-2 items-center justify-center w-full mt-2 p-2">
         {missions.map((mission, i) => {
           if (mission.result && mission.votes) {
             const isSuccess = mission.result === "success";
@@ -24,26 +24,42 @@ const GameResult = () => {
               <div
                 key={i}
                 className={`${
-                  isSuccess ? "bg-green-200" : "bg-red-200"
-                } flex flex-wrap gap-2 items-center justify-center p-2 w-full`}
+                  isSuccess
+                    ? "bg-green-200 border-green-400"
+                    : "bg-red-200 border-red-400"
+                } border rounded-sm flex flex-wrap gap-6 items-center justify-start p-2 w-full`}
               >
-                <h1 className="text-xl font-bold">{i + 1}</h1>
-                {Object.keys(mission.votes).map((player) => (
-                  <div
-                    key={player}
-                    className={`${
-                      mission.votes![player] ? "bg-green-400" : "bg-red-400"
-                    } p-2 rounded-md`}
-                  >
-                    {player}
-                  </div>
-                ))}
+                {/* <Image
+                  src={`/images/avalon/${
+                    isSuccess ? "successBg.webp" : "failureBg.webp"
+                  }`}
+                  alt={"avalon bg"}
+                  width={500}
+                  height={600}
+                  className={`object-cover absolute top-0 left-0 w-full h-full `}
+                /> */}
+                <h1 className="text-xl font-bold">
+                  ماموریت {(i + 1).toLocaleString("fa")}.
+                </h1>
+
+                <div className="flex flex-wrap items-center gap-2">
+                  {Object.keys(mission.votes).map((player) => (
+                    <div
+                      key={player}
+                      className={`${
+                        mission.votes![player] ? "bg-green-400" : "bg-red-400"
+                      } p-2 rounded-md`}
+                    >
+                      {player}
+                    </div>
+                  ))}
+                </div>
               </div>
             );
           }
         })}
       </div>
-      <div className="flex flex-wrap gap-2 items-center justify-center mt-2">
+      <div className="flex flex-wrap gap-2 items-center justify-center mt-4">
         {players.map((player) => (
           <div
             key={player.playerName}
@@ -63,9 +79,9 @@ const GameResult = () => {
           </div>
         ))}
       </div>
-      <div className="w-full flex items-center justify-center  mt-2 ">
+      <div className="w-full flex items-center justify-center  mt-4  ">
         <button
-          className="text-xl border-slate-600 bg-slate-300 cursor-pointer p-2 rounded-lg"
+          className="text-base border border-slate-600  cursor-pointer py-2 px-4 rounded-lg"
           onClick={() => resetGame()}
         >
           دوباره بازی کنید

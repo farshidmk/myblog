@@ -91,13 +91,11 @@ const MissionCard = ({ missionNumber }: { missionNumber: number }) => {
             data-tip={`تعداد آرای شکست برای، شکست در این ماموریت ${requiredFails.toLocaleString(
               "fa"
             )}`}
+            onClick={() => setShowInfo((p) => !p)}
           >
-            <p className="text-sm text-red-500 flex justify-center items-center gap-2">
+            <p className="p-1 bg-slate-50/50 border border-red-500 rounded-md text-sm text-red-500 flex justify-center items-center gap-2">
               شکست: {requiredFails.toLocaleString("fa")}
-              <span
-                className="bg-amber-300 text-amber-700 text-xs font-bold rounded-full"
-                onClick={() => setShowInfo((p) => !p)}
-              >
+              <span className="bg-amber-300 text-amber-700 text-xs font-bold rounded-full">
                 <CircleHelp />
               </span>
             </p>
