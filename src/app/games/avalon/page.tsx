@@ -1,36 +1,23 @@
-"use client";
-import React from "react";
-import { useAvalonGame } from "./AvalonProvider";
-import ChoosePlayers from "./components/ChoosePlayers";
-import ShowRoles from "./components/ShowRoles";
-// import InGame from "./components/InGame";
-import GameBoard from "./components/GameBoard";
-import GuessRoles from "./components/GuessRoles";
-import GameResult from "./components/GameResult";
+import { Metadata } from "next";
+import GameHandler from "./components/GameHandler";
 
 //https://tgmafia.com/how-play-avalon/
 
+export const metadata: Metadata = {
+  title: `Avalon game | 😎`,
+  description:
+    "اولون یک بازی گروهی و استراتژیک با تم فانتزی و خیانت است که در آن بازیکنان در نقش شخصیت‌های خوب و بد برای پیروزی در مأموریت‌ها رقابت می‌کنند. تشخیص دروغ و فریب کلید موفقیت در این بازی پرهیجان است",
+  openGraph: {
+    images: [
+      {
+        url: "/images/avalon/logo.png",
+      },
+    ],
+  },
+};
+
 const AvalonGame = () => {
-  const { gameStep } = useAvalonGame();
-
-  const renderGameStep = () => {
-    switch (gameStep) {
-      case "choose-players":
-        return <ChoosePlayers />;
-      case "show-roles":
-        return <ShowRoles />;
-      case "in-game":
-        return <GameBoard />;
-      case "guess-role":
-        return <GuessRoles />;
-      case "show-result":
-        return <GameResult />;
-      default:
-        return <div>Unknown game state</div>;
-    }
-  };
-
-  return <div className="min-h-screen bg-gray-100">{renderGameStep()}</div>;
+  return <GameHandler />;
 };
 
 export default AvalonGame;
