@@ -77,12 +77,12 @@ const ShowRoles = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
-      <div className="max-w-lg w-full space-y-8">
+    <div className="min-h-screen flex  bg-gray-100 p-2">
+      <div className="max-w-lg w-full space-y-1">
         {/* Current player role view */}
-        <div className="bg-white rounded-xl shadow-lg p-6 space-y-6">
+        <div className="bg-white rounded-xl shadow-lg p-4 space-y-6">
           <div className="text-center">
-            <h2 className="text-2xl font-extrabold mb-2">
+            <h2 className="text-xl font-extrabold mb-2">
               {currentPlayer.playerName}
             </h2>
             <p className="text-gray-600">
@@ -93,7 +93,7 @@ const ShowRoles = () => {
           </div>
 
           {isRoleVisible ? (
-            <div className="space-y-6">
+            <div className="space-y-2">
               <RoleDisplay
                 player={currentPlayer}
                 teammates={getTeammates(currentPlayer)}
@@ -101,14 +101,14 @@ const ShowRoles = () => {
               <div className="flex space-x-4 gap-2">
                 <button
                   onClick={handleHideRole}
-                  className="flex-1 py-3 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors flex items-center justify-center gap-2"
+                  className="flex-1 py-3 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors flex items-center justify-center gap-2 text-sm"
                 >
                   <EyeClosed />
                   بستن نقش
                 </button>
                 <button
                   onClick={handleNextPlayer}
-                  className="flex-1 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center gap-2"
+                  className="flex-1 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center justify-center gap-2 text-sm"
                 >
                   {currentPlayerIndex < players.length - 1 ? (
                     <>
