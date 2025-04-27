@@ -35,7 +35,7 @@ const ChoosePlayers = () => {
     const names = data.players.map((p) => p.name);
     const uniqueNames = new Set(names);
     if (uniqueNames.size !== names.length) {
-      alert("All player names must be unique!");
+      alert("نام بازیکنان نباید تکراری باشد باهم!!");
       return;
     }
 
@@ -87,7 +87,7 @@ const ChoosePlayers = () => {
         <div className="space-y-6">
           <fieldset className="border rounded-lg p-4">
             <legend className="text-lg font-semibold px-2">
-              Number of Players
+              تعداد بازیکنان
             </legend>
             <select
               value={numberOfPlayers}
@@ -96,7 +96,7 @@ const ChoosePlayers = () => {
             >
               {NUMBER_OF_PLAYERS.map((num) => (
                 <option key={num} value={num}>
-                  {num} Players
+                  بازیکن {num}
                 </option>
               ))}
             </select>
@@ -110,17 +110,17 @@ const ChoosePlayers = () => {
                     htmlFor={`players[${index}].name`}
                     className="block font-medium"
                   >
-                    Player {index + 1}
+                    بازیکن {index + 1}
                   </label>
                   <Controller
                     name={`players.${index}.name`}
                     control={control}
-                    rules={{ required: "Name is required" }}
+                    rules={{ required: "نام را وارد کنید" }}
                     render={({ field, fieldState }) => (
                       <div>
                         <input
                           {...field}
-                          placeholder="Enter player name..."
+                          placeholder="نام را وارد کنید..."
                           className="w-full p-2 border rounded-md"
                         />
                         {fieldState.error && (
@@ -138,13 +138,15 @@ const ChoosePlayers = () => {
               type="submit"
               className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors"
             >
-              Start Game
+              شروع
             </button>
           </form>
         </div>
 
         <div className="space-y-4">
-          <h2 className="text-xl font-semibold">Available Roles</h2>
+          <h2 className="text-xl font-semibold">
+            نقش های موجود در بازی {numberOfPlayers} نفره
+          </h2>
           <div
             className="grid grid-cols-2 sm:grid-cols-3 gap-4"
             key={numberOfPlayers}

@@ -12,39 +12,42 @@ const RoleDisplay = ({
 }) => {
   const isEvil = player.isEvil;
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col items-center space-y-4">
+    <div className="">
+      <div className="flex flex-col items-center gap-1">
         <Image
           src={player.imgUrl}
           alt={player.roleName}
-          width={128}
-          height={128}
-          className={`w-32 h-32 object-cover rounded-full border-4 ${
+          width={112}
+          height={112}
+          className={`w-28 h-28 object-cover rounded-full border-4 ${
             isEvil ? "border-red-500" : "border-blue-500"
           }`}
         />
         <h3
-          className={`text-xl font-semibold ${
+          className={`text-lg font-bold ${
             isEvil ? "text-red-800" : "text-blue-800"
           }`}
         >
           {player.roleName}
         </h3>
-        <p className={`text-lg ${isEvil ? "text-red-600" : "text-blue-600"}`}>
+        <p
+          className={`text-xs ${
+            isEvil ? "text-red-600" : "text-blue-600"
+          } mb-1`}
+        >
           {isEvil ? "Evil Team" : "Good Team"}
         </p>
       </div>
       <div
-        className={`text-base border rounded-md p-2 text-center ${
+        className={`text-base border rounded-md p-1 text-center ${
           isEvil ? "border-red-600 bg-red-50" : "border-blue-600 bg-blue-50"
         }`}
       >
         {ROLE_DESCRIPTIONS[player.roleName]}
       </div>
       {teammates.length > 0 && (
-        <div className="space-y-2">
-          <h4 className="text-lg font-semibold">You can see:</h4>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+        <div className="">
+          <div className="grid grid-cols-3 sm:grid-cols-3 gap-2 mt-1">
             {teammates.map((teammate) => (
               <div
                 key={teammate.playerName}

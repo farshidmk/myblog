@@ -23,8 +23,6 @@ export type AvalonPlayer = {
 };
 
 export type Mission = {
-  teamSize: number;
-  requiredFails: number;
   result?: "success" | "fail";
   team?: string[];
   /**
@@ -123,6 +121,11 @@ export type AvalonContext = {
    * Set Winner
    */
   setWinner: React.Dispatch<React.SetStateAction<AvalonContext["winner"]>>;
+
+  /**
+   * restart the game
+   */
+  resetGame: () => void;
 };
 
 export type AvalonGetPlayersNameForm = { players: { name: string }[] };

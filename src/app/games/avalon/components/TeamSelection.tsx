@@ -57,7 +57,7 @@ const TeamSelection = ({ setShowMission }: Props) => {
   }
 
   return (
-    <div className="container mx-auto max-w-xl">
+    <div className="container mx-auto max-w-xl p-1">
       <h1 className="text-2xl font-bold mb-1">انتخاب تیم</h1>
       <div className="flex flex-wrap gap-2 mb-2">
         {players.map((player) => {
