@@ -1,18 +1,14 @@
 "use client";
 
-import {
-  EditGameWordCategory,
-  getAllGameWordByCategory,
-  getAllGameWordCategory,
-} from "@/app/_actions/gameWord";
-import React, { useEffect, useState } from "react";
-import { GameSettingCategoryWithWordsCount } from "../gameSetting-type";
-import { GameWord, GameWordCategory } from "@prisma/client";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { CircleCheck } from "lucide-react";
+import { EditGameWordCategory } from "@/app/games/settings/_actions/gameWord";
 import UserInputWrapper from "@/components/ui/userInputWrapper/UserInputWrapper";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { GameWordCategory } from "@prisma/client";
+import { CircleCheck } from "lucide-react";
+import { useForm } from "react-hook-form";
 import { wordCategoryValidation } from "../gameSettingValidations";
+import WordsOfCategory from "./WordsOfCategory";
+import { useEffect } from "react";
 
 type Props = {
   category: GameWordCategory;
@@ -21,41 +17,27 @@ type Props = {
 type EditCategoryForm = Omit<GameWordCategory, "id">;
 
 const EditCategory = ({ category }: Props) => {
-  const [allWords, setAllWords] = useState<GameWord[]>([]);
-  const [status, setstatus] = useState<ActionResponseStatus>("idle");
-
   const {
     watch,
+    setValue,
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<EditCategoryForm>({
     resolver: zodResolver(wordCategoryValidation),
     defaultValues: {
-      name: category.name,
+      name: "",
     },
   });
+
+  useEffect(() => {
+    setValue("name", category.name);
+  }, [category, setValue]);
 
   async function onSubmit({ name }: EditCategoryForm) {
     const response = await EditGameWordCategory(name, category.id);
     if (!response.success) {
     }
-  }
-
-  useEffect(() => {
-    async function getAllWordsByCategory() {
-      setstatus("pending");
-      const res = await getAllGameWordByCategory(category.id);
-      if (res.success) {
-        setAllWords(res.data!);
-        setstatus("success");
-      }
-    }
-    getAllWordsByCategory();
-  }, [category?.id]);
-
-  if (status === "pending") {
-    return <div className="skeleton h-32 w-full"></div>;
   }
 
   return (
@@ -92,9 +74,7 @@ const EditCategory = ({ category }: Props) => {
           </div>
         )}
       </form>
-      {allWords?.map((w) => (
-        <div key={w.id}>{w.word}</div>
-      ))}
+      <WordsOfCategory key={category.id} categoryId={category.id} />
     </div>
   );
 };

@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/ui/Navbar";
 import { Vazirmatn } from "next/font/google";
 import { SessionProvider } from "next-auth/react";
+import { Bounce, ToastContainer } from "react-toastify";
 
 const vazirmatn = Vazirmatn({
   subsets: ["arabic"],
@@ -23,6 +24,20 @@ export default function RootLayout({
   return (
     <html lang="fa" dir="rtl">
       <body className={`${vazirmatn.className} antialiased h-screen`}>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar
+          newestOnTop
+          closeOnClick
+          rtl
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          transition={Bounce}
+        />
+
         <SessionProvider>
           <Navbar />
           {children}

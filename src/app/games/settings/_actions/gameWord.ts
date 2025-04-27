@@ -2,7 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { z } from "zod";
-import { GameSettingCategoryWithWordsCount } from "../games/settings/gameSetting-type";
+import { GameSettingCategoryWithWordsCount } from "../gameSetting-type";
 import { Difficulty, GameWord, GameWordCategory } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
@@ -161,6 +161,37 @@ export async function getAllGameWordByCategory(
     //     wordsCount: category._count.words,
     //   })
     // );
+    return { success: true, data: res };
+  } catch (error) {
+    console.log({ error });
+    return { success: false, errors: ["خطا در داده"] };
+  }
+}
+
+export async function saveGameWord(
+  data: Omit<GameWord, "id">
+): Promise<ActionResponse<GameWord>> {
+  try {
+    const isExist = await prisma.gameWord.findFirst({
+      where: {
+        word: data.word,
+      },
+      select: {
+        id: true,
+        word: true,
+        categoryId: true,
+        difficulty: true,
+        category: true,
+      },
+    });
+    if (isExist) {
+      const errorMsg = `کلمه مشابه با ${isExist.word}  در دسته بندی ${isExist.category.name} وجود دارد`;
+      return { success: false, errors: [errorMsg] };
+    }
+    const res = await prisma.gameWord.create({
+      data,
+    });
+    revalidatePath("/games/settings");
     return { success: true, data: res };
   } catch (error) {
     console.log({ error });
