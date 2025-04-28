@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { wordValidation } from "../gameSettingValidations";
 import UserInputWrapper from "@/components/ui/userInputWrapper/UserInputWrapper";
-import { CircleCheck } from "lucide-react";
+import { CirclePlus } from "lucide-react";
 import { z } from "zod";
 import { toast } from "react-toastify";
 import WordCard from "./WordCard";
@@ -59,7 +59,7 @@ const WordsOfCategory = ({ categoryId }: Props) => {
   }, [categoryId]);
 
   if (status === "pending") {
-    return <div className="skeleton h-32 w-full"></div>;
+    return <span className="loading loading-bars loading-xl"></span>;
   }
 
   return (
@@ -121,7 +121,7 @@ const WordsOfCategory = ({ categoryId }: Props) => {
               className="btn btn-sm btn-ghost h-10 w-20"
               disabled={isSubmitting}
             >
-              <CircleCheck className="h-10 w-10 text-primary hover:text-primary-focus disabled:text-gray-300 transition-all" />
+              <CirclePlus className="h-10 w-10 text-primary hover:text-primary-focus disabled:text-gray-300 transition-all" />
             </button>
           </div>
         )}

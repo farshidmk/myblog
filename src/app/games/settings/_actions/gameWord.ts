@@ -65,7 +65,6 @@ export async function EditGameWordCategory(
     revalidatePath("/games/settings");
     return { success: true, data: result };
   } catch (error) {
-    console.log({ error });
     if (error instanceof z.ZodError) {
       return {
         success: false,
@@ -127,6 +126,7 @@ export async function createGameWord(
         difficulty: difficulty as Difficulty,
       },
     });
+
     revalidatePath("/games/settings");
     return { success: true, data: res };
   } catch (error) {
@@ -198,28 +198,27 @@ export async function saveGameWord(
     return { success: false, errors: ["خطا در داده"] };
   }
 }
-export async function saveGameWord2(
-  data: Omit<GameWord, "id">
+export async function editGameWord(
+  data: GameWord
 ): Promise<ActionResponse<GameWord>> {
   try {
     const isExist = await prisma.gameWord.findFirst({
       where: {
-        word: data.word,
-      },
-      select: {
-        id: true,
-        word: true,
-        categoryId: true,
-        difficulty: true,
-        category: true,
+        id: data.id,
       },
     });
-    if (isExist) {
-      const errorMsg = `کلمه مشابه با ${isExist.word}  در دسته بندی ${isExist.category.name} وجود دارد`;
+    if (!isExist) {
+      const errorMsg = `کلمه وجود ندارد`;
       return { success: false, errors: [errorMsg] };
     }
-    const res = await prisma.gameWord.create({
-      data,
+    const res = await prisma.gameWord.update({
+      where: {
+        id: data.id,
+      },
+      data: {
+        word: data.word,
+        difficulty: data.difficulty,
+      },
     });
     revalidatePath("/games/settings");
     return { success: true, data: res };

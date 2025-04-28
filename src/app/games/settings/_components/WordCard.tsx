@@ -5,6 +5,8 @@ import { useForm } from "react-hook-form";
 import { wordValidation } from "../gameSettingValidations";
 import { z } from "zod";
 import { CheckCircle, CircleX, Pencil } from "lucide-react";
+import { editGameWord } from "../_actions/gameWord";
+import { toast } from "react-toastify";
 
 type Props = {
   word: GameWord;
@@ -14,14 +16,28 @@ type WordForm = z.infer<typeof wordValidation>;
 
 const WordCard = ({ word }: Props) => {
   const [isEditing, setIsEditing] = useState(false);
-  const { register, handleSubmit, reset } = useForm<WordForm>({
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    formState: { isSubmitting },
+    watch,
+  } = useForm<WordForm>({
     resolver: zodResolver(wordValidation),
     defaultValues: word,
   });
-  const { difficulty } = word;
+  const difficulty = watch("difficulty");
 
-  const onSubmit = (data: WordForm) => {
-    //   onSave(data);
+  const onSubmit = async (data: WordForm) => {
+    const result = await editGameWord({ ...data, id: word.id });
+    if (!result.success) {
+      toast.error(result.errors);
+      return 0;
+    }
+    setValue("word", result.data!.word!);
+    setValue("difficulty", result.data!.difficulty!);
+    toast.success(`کلمه با موفقیت به روزرسانی شد`);
     setIsEditing(false);
   };
 
@@ -32,44 +48,50 @@ const WordCard = ({ word }: Props) => {
           onSubmit={handleSubmit(onSubmit)}
           className="flex items-center gap-2 h-full"
         >
-          <div>
-            <input
-              {...register("word")}
-              className="border border-gray-300 px-3 py-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="کلمه"
-            />
-            <select
-              {...register("difficulty")}
-              className="border border-gray-300 px-3 py-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <option value={Difficulty.easy}>آسان</option>
-              <option value={Difficulty.medium}>متوسط</option>
-              <option value={Difficulty.hard}>سخت</option>
-            </select>
-          </div>
-          <div className="flex justify-between gap-2">
-            <button
-              type="submit"
-              className=" text-green-600  rounded-md hover:text-green-700 transition"
-            >
-              <CheckCircle />
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                setIsEditing(false);
-                reset(word);
-              }}
-              className="text-gray-500 hover:text-gray-700"
-            >
-              <CircleX />
-            </button>
-          </div>
+          {isSubmitting ? (
+            <span className="loading loading-dots loading-xs"></span>
+          ) : (
+            <>
+              <div>
+                <input
+                  {...register("word")}
+                  className="border border-gray-300 px-3 py-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="کلمه"
+                />
+                <select
+                  {...register("difficulty")}
+                  className="border border-gray-300 px-3 py-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value={Difficulty.easy}>آسان</option>
+                  <option value={Difficulty.medium}>متوسط</option>
+                  <option value={Difficulty.hard}>سخت</option>
+                </select>
+              </div>
+              <div className="flex justify-between gap-2">
+                <button
+                  type="submit"
+                  className=" text-green-600  rounded-md hover:text-green-700 transition"
+                >
+                  <CheckCircle />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsEditing(false);
+                    reset(word);
+                  }}
+                  className="text-gray-500 hover:text-gray-700"
+                >
+                  <CircleX />
+                </button>
+              </div>
+            </>
+          )}
         </form>
       ) : (
         <div className="flex items-center gap-2 h-full">
           <div className="flex flex-col gap-1 w-3/4">
-            <h3 className="text-lg font-bold text-gray-800">{word.word}</h3>
+            <h3 className="text-lg font-bold text-gray-800">{watch("word")}</h3>
             <div
               className={`inline-block mt-1 text-xs text-center font-medium px-3 py-1 rounded-full w-full ${
                 difficulty === Difficulty.easy

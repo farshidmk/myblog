@@ -41,10 +41,10 @@ const EditCategory = ({ category }: Props) => {
   }
 
   return (
-    <div className="card bg-base-100 shadow-md hover:shadow-lg transition-shadow border">
+    <div className="card bg-base-100 shadow-md hover:shadow-lg transition-shadow border p-2">
       <form onSubmit={handleSubmit(onSubmit)} className=" w-full">
         {isSubmitting ? (
-          <div className="skeleton h-full w-full"></div>
+          <span className="loading loading-spinner loading-xl"></span>
         ) : (
           <div className="card-body flex flex-row items-center justify-between w-72">
             <div className="flex-1">
