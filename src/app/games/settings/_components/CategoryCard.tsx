@@ -11,7 +11,7 @@ const CategoryCard = ({
   category: GameSettingCategoryWithWordsCount;
 }) => {
   return (
-    <div className="card bg-base-100 shadow-md hover:shadow-lg transition-shadow border h-full w-52 ">
+    <div className="card bg-base-100 shadow-md hover:shadow-lg transition-shadow border h-full w-52">
       <div className="card-body flex flex-row items-center justify-between">
         <div>
           <h2 className="card-title text-lg font-semibold">{name}</h2>

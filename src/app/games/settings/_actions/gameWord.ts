@@ -198,6 +198,36 @@ export async function saveGameWord(
     return { success: false, errors: ["خطا در داده"] };
   }
 }
+export async function saveGameWord2(
+  data: Omit<GameWord, "id">
+): Promise<ActionResponse<GameWord>> {
+  try {
+    const isExist = await prisma.gameWord.findFirst({
+      where: {
+        word: data.word,
+      },
+      select: {
+        id: true,
+        word: true,
+        categoryId: true,
+        difficulty: true,
+        category: true,
+      },
+    });
+    if (isExist) {
+      const errorMsg = `کلمه مشابه با ${isExist.word}  در دسته بندی ${isExist.category.name} وجود دارد`;
+      return { success: false, errors: [errorMsg] };
+    }
+    const res = await prisma.gameWord.create({
+      data,
+    });
+    revalidatePath("/games/settings");
+    return { success: true, data: res };
+  } catch (error) {
+    console.log({ error });
+    return { success: false, errors: ["خطا در داده"] };
+  }
+}
 
 const wordCategoryValidation = z.object({
   name: z.string().min(2, "نام دسته بندی حداقل باید 2 حرف باشد"),

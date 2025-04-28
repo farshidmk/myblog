@@ -41,15 +41,12 @@ const EditCategory = ({ category }: Props) => {
   }
 
   return (
-    <div>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="card bg-base-100 shadow-md hover:shadow-lg transition-shadow border w-full"
-      >
+    <div className="card bg-base-100 shadow-md hover:shadow-lg transition-shadow border">
+      <form onSubmit={handleSubmit(onSubmit)} className=" w-full">
         {isSubmitting ? (
           <div className="skeleton h-full w-full"></div>
         ) : (
-          <div className="card-body flex flex-row items-center justify-between w-full">
+          <div className="card-body flex flex-row items-center justify-between w-72">
             <div className="flex-1">
               <UserInputWrapper
                 label=" دسته بندی"

@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { wordValidation } from "../gameSettingValidations";
 import { z } from "zod";
+import { CheckCircle, CircleX, Pencil } from "lucide-react";
 
 type Props = {
   word: GameWord;
@@ -25,28 +26,33 @@ const WordCard = ({ word }: Props) => {
   };
 
   return (
-    <div className="bg-white shadow-md rounded-lg p-4 border w-full max-w-40 h-28">
+    <div className="bg-white shadow-lg rounded-xl p-1 border border-gray-200 w-full max-w-60 flex flex-col justify-between transition-transform duration-300 hover:shadow-xl">
       {isEditing ? (
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <input
-            {...register("word")}
-            className="border px-3 py-2 w-full rounded"
-            placeholder="Word"
-          />
-          <select
-            {...register("difficulty")}
-            className="border px-3 py-2 w-full rounded"
-          >
-            <option value={Difficulty.easy}>آسان</option>
-            <option value={Difficulty.medium}>متوسط</option>
-            <option value={Difficulty.hard}>سخت</option>
-          </select>
-          <div className="flex justify-between">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex items-center gap-2 h-full"
+        >
+          <div>
+            <input
+              {...register("word")}
+              className="border border-gray-300 px-3 py-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="کلمه"
+            />
+            <select
+              {...register("difficulty")}
+              className="border border-gray-300 px-3 py-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value={Difficulty.easy}>آسان</option>
+              <option value={Difficulty.medium}>متوسط</option>
+              <option value={Difficulty.hard}>سخت</option>
+            </select>
+          </div>
+          <div className="flex justify-between gap-2">
             <button
               type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+              className=" text-green-600  rounded-md hover:text-green-700 transition"
             >
-              ذخیره
+              <CheckCircle />
             </button>
             <button
               type="button"
@@ -56,30 +62,31 @@ const WordCard = ({ word }: Props) => {
               }}
               className="text-gray-500 hover:text-gray-700"
             >
-              بازگشت
+              <CircleX />
             </button>
           </div>
         </form>
       ) : (
-        <div>
-          <h3 className="text-xl font-semibold">{word.word}</h3>
-          <div
-            className={`badge ${
-              difficulty === Difficulty.easy
-                ? "badge-success"
-                : difficulty === Difficulty.medium
-                ? "badge-warning"
-                : "badge-error"
-            } `}
-          >
-            {difficultyEnumToText(difficulty)}
+        <div className="flex items-center gap-2 h-full">
+          <div className="flex flex-col gap-1 w-3/4">
+            <h3 className="text-lg font-bold text-gray-800">{word.word}</h3>
+            <div
+              className={`inline-block mt-1 text-xs text-center font-medium px-3 py-1 rounded-full w-full ${
+                difficulty === Difficulty.easy
+                  ? "bg-green-100 text-green-800"
+                  : difficulty === Difficulty.medium
+                  ? "bg-yellow-100 text-yellow-800"
+                  : "bg-red-100 text-red-800"
+              }`}
+            >
+              {difficultyEnumToText(difficulty)}
+            </div>
           </div>
-
           <button
             onClick={() => setIsEditing(true)}
-            className="mt-2 text-blue-500 hover:underline"
+            className="self-start text-blue-600 hover:underline text-lg flex items-center h-full w-1/4 justify-center"
           >
-            ویرایش
+            <Pencil className="w-4 h-4" />
           </button>
         </div>
       )}

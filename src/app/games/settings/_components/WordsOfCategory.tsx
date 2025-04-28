@@ -40,15 +40,9 @@ const WordsOfCategory = ({ categoryId }: Props) => {
   async function onSubmit(value: EditWordForm) {
     const response = await saveGameWord(value);
     if (!response.success) {
-      toast.error(response.errors?.join(" , ") || "خطا در انجام عملیات", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-      });
+      toast.error(response.errors?.join(" , ") || "خطا در انجام عملیات");
+    } else {
+      toast.success(`کلمه ${value.word} اضافه شد`);
     }
   }
 
@@ -77,7 +71,7 @@ const WordsOfCategory = ({ categoryId }: Props) => {
       </div>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="card bg-base-100 shadow-md hover:shadow-lg transition-shadow border w-full"
+        className="card bg-base-100 shadow-md hover:shadow-lg transition-shadow border w-full max-w-md"
       >
         {isSubmitting ? (
           <div className="skeleton h-full w-full"></div>

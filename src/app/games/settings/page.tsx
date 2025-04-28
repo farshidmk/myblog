@@ -32,7 +32,7 @@ const GameSettingPage = () => {
   return (
     <div className="w-full">
       {Array.isArray(allCategories) ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 xl:grid-cols-8 gap-6 p-2">
+        <div className="flex gap-2 p-2">
           {allCategories.map((category) => (
             <CategoryCard
               key={category.id}
