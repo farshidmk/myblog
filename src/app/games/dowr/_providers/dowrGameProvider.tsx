@@ -1,3 +1,4 @@
+"use client";
 import { createContext, useState } from "react";
 import { DowrContextType } from "../_types/dowrType";
 
