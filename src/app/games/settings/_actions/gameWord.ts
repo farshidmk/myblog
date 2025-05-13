@@ -28,13 +28,11 @@ export async function createGameWordCategory(
         success: false,
         // errors: Object.values(error.flatten().fieldErrors).map(e => e?.join(" , ")) ,
         errors: [],
-        data: [],
       };
     }
     return {
       success: false,
       errors: ["خطا در ذخیره اطلاعات"],
-      data: [],
     };
   }
 }

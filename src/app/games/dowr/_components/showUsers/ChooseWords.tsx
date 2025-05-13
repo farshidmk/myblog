@@ -17,7 +17,7 @@ const ChooseWords = () => {
     GameWordCategory[]
   >({
     queryKey: ["/api/games/category"],
-    select: (res) => res.data,
+    select: (res) => res.data || [],
   });
 
   //   const difficultyOptions = {
