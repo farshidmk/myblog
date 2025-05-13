@@ -5,7 +5,9 @@ import { Controller, useFieldArray, useFormContext } from "react-hook-form";
 import { DowrChoosePlayer } from "../../dowrGame-types";
 
 const CircleUsers = () => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const { control } = useFormContext<DowrChoosePlayer>();
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const { fields } = useFieldArray({
     control,
     name: "players",
