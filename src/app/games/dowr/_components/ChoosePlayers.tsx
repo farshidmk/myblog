@@ -1,19 +1,13 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
 import useDowrGame from "../_hooks/useDowrGameProvider";
-import { GameWordCategory } from "@prisma/client";
 import UserInputWrapper from "@/components/ui/userInputWrapper/UserInputWrapper";
 import { NUMBER_OF_PLAYERS } from "../_constants/dowrPlayer";
 import { useState } from "react";
-import {
-  Controller,
-  FormProvider,
-  useFieldArray,
-  useForm,
-} from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { DowrChoosePlayer } from "../dowrGame-types";
 import CircleUsers from "./showUsers/CircleUsers";
+import ChooseWords from "./showUsers/ChooseWords";
 
 const ChoosePlayers = () => {
   const [numberOfPlayers, setNumberOfPlayers] = useState(4);
@@ -22,22 +16,10 @@ const ChoosePlayers = () => {
       players: Array(4).fill({ name: "" }),
     },
   });
-  const { watch, control, setValue } = methods;
+  const { watch, setValue, handleSubmit } = methods;
   // const players = watch("players");
-  const { append, remove, fields } = useFieldArray({
-    control,
-    name: "players",
-  });
 
   const { setWordsDifficulty, setGameStep, setPlayers } = useDowrGame();
-  // const { data, status } = useQuery<
-  //   ActionResponse<GameWordCategory[]>,
-  //   Error,
-  //   GameWordCategory[]
-  // >({
-  //   queryKey: ["/api/games/category"],
-  //   select: (res) => res.data || [],
-  // });
 
   // Handle number of players change
   const handleNumPlayersChange = (
@@ -61,11 +43,17 @@ const ChoosePlayers = () => {
       }
     }
     setValue("players", temp);
-    console.log({ fields });
   };
 
+  function onSubmitForm(values: DowrChoosePlayer) {
+    console.log({ values });
+    setWordsDifficulty(values.difficulty);
+    setPlayers(values.players?.map((player) => player.name));
+    setGameStep("in game");
+  }
+
   return (
-    <div>
+    <div className="container max-w-lg mx-auto p-2">
       <UserInputWrapper label="تعداد ">
         <select value={numberOfPlayers} onChange={handleNumPlayersChange}>
           {NUMBER_OF_PLAYERS.map((num) => (
@@ -76,10 +64,20 @@ const ChoosePlayers = () => {
         </select>
       </UserInputWrapper>
       <FormProvider {...methods}>
-        <form className="mx-auto max-w-lg colum">
-          <div className="grid grid-cols-2"></div>
-
+        <form
+          className="mx-auto max-w-lg"
+          onSubmit={handleSubmit(onSubmitForm)}
+        >
           <CircleUsers />
+          <ChooseWords />
+          <div className="w-full mt-4 px-4">
+            <button
+              type="submit"
+              className="btn btn-outline btn-primary w-full"
+            >
+              شروع
+            </button>
+          </div>
         </form>
       </FormProvider>
     </div>

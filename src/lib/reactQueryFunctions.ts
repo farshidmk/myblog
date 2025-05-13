@@ -15,14 +15,13 @@ export const serverCall: MutationFunction<unknown, unknown> = async (
       body,
     };
     const response = await fetch(entity, requestOptions);
-    const result = await response.json();
-    // const response = await fetch({ ...requestOptions });
-    if (result?.status === 200) {
-      return result?.data;
-    } else if (result?.status === 204) {
+    if (response?.status === 200) {
+      const result = await response.json();
+      return result;
+    } else if (response?.status === 204) {
       return { data: { rows: [] } };
     } else {
-      throw new Error(`Error on operation... - ${result?.statusText}`);
+      throw new Error(`Error on operation... - ${response?.statusText}`);
     }
   } catch (e) {
     throw new Error(JSON.stringify(e) || `Error on operation...`);
