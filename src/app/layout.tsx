@@ -39,8 +39,10 @@ export default function RootLayout({
         />
 
         <SessionProvider>
-          <Navbar />
-          {children}
+          <div className="flex flex-col h-full">
+            <Navbar />
+            <main className="flex-1 overflow-auto">{children}</main>
+          </div>
         </SessionProvider>
       </body>
     </html>
