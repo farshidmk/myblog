@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/ui/Navbar";
+import Footer from "@/components/ui/Footer";
 import { Vazirmatn } from "next/font/google";
 import { SessionProvider } from "next-auth/react";
 import { Bounce, ToastContainer } from "react-toastify";
@@ -23,7 +24,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fa" dir="rtl">
-      <body className={`${vazirmatn.className} antialiased h-screen`}>
+      <body
+        className={`${vazirmatn.className} antialiased min-h-screen flex flex-col`}
+      >
         <ToastContainer
           position="top-right"
           autoClose={5000}
@@ -40,7 +43,10 @@ export default function RootLayout({
 
         <SessionProvider>
           <Navbar />
-          {children}
+          <main className="flex-1 overflow-y-auto">
+            {children}
+          </main>
+          <Footer />
         </SessionProvider>
       </body>
     </html>

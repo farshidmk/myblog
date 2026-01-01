@@ -1,1 +1,1 @@
-{"projects":{"next":{"myblog":{"src":{"app":{"api":{"auth":{"[...nextauth]":{}}}}}}}}}
+{"projects":{"next":{"myblog":{"src":{"app":{"api":{"auth":{"[...nextauth]":{}}}}}}}},"farshid":{"projects":{"nextjs":{"farshidblog":{"public":{"images":{"avalon":{}}}}}}}}
