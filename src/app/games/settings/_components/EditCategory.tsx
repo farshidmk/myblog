@@ -1,14 +1,14 @@
 "use client";
 
-import { EditGameWordCategory } from "@/app/games/settings/_actions/gameWord";
 import UserInputWrapper from "@/components/ui/userInputWrapper/UserInputWrapper";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { GameWordCategory } from "@prisma/client";
+import { GameWordCategory } from "@/types/game";
 import { CircleCheck } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { wordCategoryValidation } from "../gameSettingValidations";
 import WordsOfCategory from "./WordsOfCategory";
 import { useEffect } from "react";
+import { editGameWordCategory } from "@/lib/nestApi";
 
 type Props = {
   category: GameWordCategory;
@@ -35,7 +35,7 @@ const EditCategory = ({ category }: Props) => {
   }, [category, setValue]);
 
   async function onSubmit({ name }: EditCategoryForm) {
-    const response = await EditGameWordCategory(name, category.id);
+    const response = await editGameWordCategory(category.id, name);
     if (!response.success) {
     }
   }

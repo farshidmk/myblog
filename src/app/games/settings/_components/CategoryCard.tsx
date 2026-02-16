@@ -1,7 +1,7 @@
 import React from "react";
 import { GameSettingCategoryWithWordsCount } from "../gameSetting-type";
 import { Pencil } from "lucide-react";
-import { GameWordCategory } from "@prisma/client";
+import { GameWordCategory } from "@/types/game";
 
 const CategoryCard = ({
   handleOnEdit,

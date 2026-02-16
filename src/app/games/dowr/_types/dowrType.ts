@@ -1,4 +1,4 @@
-import { Difficulty } from "@prisma/client";
+import { Difficulty } from "@/types/game";
 import { Dispatch, SetStateAction } from "react";
 
 export type DowrContextType = {

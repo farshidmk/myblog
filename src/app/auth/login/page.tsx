@@ -1,44 +1,42 @@
 "use client";
-import { credentialsLogin } from "@/shared/actions";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { SignUpForm } from "../auth-types";
 import { signInSchema } from "../auth-validation";
 import { useState } from "react";
-import { isKnownError } from "@/shared/errorCheck";
 import Alert from "@/components/ui/alert/Alert";
 import { useRouter } from "next/navigation";
 import AuthFormLayout from "../AuthFormLayout";
 import Link from "next/link";
 import { UserRoundPlus } from "lucide-react";
+import { z } from "zod";
+import { useAuth } from "@/components/providers/AuthProvider";
 
-type LoginForm = Omit<SignUpForm, "name">;
+type LoginForm = z.infer<typeof signInSchema>;
+
 const Login = () => {
   const [serverError, setServerError] = useState("");
   const router = useRouter();
+  const { login } = useAuth();
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<LoginForm>({
     resolver: zodResolver(signInSchema),
   });
 
   const onSubmit = async (data: LoginForm) => {
     try {
-      const res = await credentialsLogin(data.password, data.username);
-      if (res?.error) {
-        setServerError(res.error); // If error, show the error message
-      }
+      setServerError("");
+      await login({
+        identifier: data.username,
+        password: data.password,
+      });
       router.push("/");
     } catch (error) {
-      if (isKnownError(error)) {
-        setServerError(error.message);
-      } else {
-        setServerError("خطا در ارتباط با سرور");
-      }
-      //TODO: check error type and send proper error message
+      setServerError("خطا در ورود. اطلاعات را بررسی کنید.");
       console.log(error);
     }
   };
@@ -54,7 +52,7 @@ const Login = () => {
             id="username"
             type="text"
             {...register("username")}
-            placeholder="نام کاربری را وارد کنید..."
+            placeholder="نام کاربری یا تلفن همراه یا ایمیل را وارد کنید"
             className="input input-sm"
           />
           {errors.username && (
@@ -85,9 +83,10 @@ const Login = () => {
         <div className="w-full flex items-center justify-center">
           <button
             type="submit"
+            disabled={isSubmitting}
             className="btn btn-wide btn-primary btn-outline mt-5 mb-5 "
           >
-            ورود
+            {isSubmitting ? "در حال ورود..." : "ورود"}
           </button>
         </div>
 

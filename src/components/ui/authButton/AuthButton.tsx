@@ -1,13 +1,13 @@
 "use client";
-import { signOut, useSession } from "next-auth/react";
 import React from "react";
 import { KeySquare } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/components/providers/AuthProvider";
 
 const AuthButton = () => {
-  const session = useSession();
+  const { status, user, logout } = useAuth();
   const router = useRouter();
-  if (session.status === "unauthenticated") {
+  if (status === "unauthenticated") {
     return (
       <button
         className="btn btn-outline btn-primary"
@@ -18,10 +18,10 @@ const AuthButton = () => {
       </button>
     );
   }
-  if (session.status === "authenticated") {
+  if (status === "authenticated") {
     return (
-      <button className="flex h-10 rounded-lg" onClick={() => signOut()}>
-        {session.data?.user?.name}
+      <button className="flex h-10 rounded-lg" onClick={logout}>
+        {user?.firstName || user?.username || user?.email}
       </button>
     );
   }

@@ -1,8 +1,7 @@
 type ServerCallType = {
   entity: string;
-  body?: RequestInit["body"];
-  method: RequestInit["method"];
-  headers?: RequestInit["headers"];
-
-  // method: AXIOS
+  body?: unknown;
+  method: "get" | "post" | "put" | "patch" | "delete";
+  headers?: Record<string, string>;
+  params?: Record<string, string | number | boolean>;
 };

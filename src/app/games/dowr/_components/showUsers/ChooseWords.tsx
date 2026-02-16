@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Difficulty, GameWordCategory } from "@prisma/client";
+import { Difficulty, GameWordCategory } from "@/types/game";
 import ErrorHandler from "@/components/error/ErrorHandler";
 import { useFormContext } from "react-hook-form";
 import { DowrChoosePlayer } from "../../dowrGame-types";
@@ -16,7 +16,7 @@ const ChooseWords = () => {
     Error,
     GameWordCategory[]
   >({
-    queryKey: ["/api/games/category"],
+    queryKey: ["/games/category"],
     select: (res) => res.data || [],
   });
 
@@ -80,7 +80,7 @@ const ChooseWords = () => {
                     ? selectedDifficulties.filter((v: string) => v !== level)
                     : [...selectedDifficulties, level];
                   if (updated.length === 0) {
-                    updated.push("easy");
+                    updated.push(Difficulty.easy);
                   }
 
                   setValue("difficulty", updated);

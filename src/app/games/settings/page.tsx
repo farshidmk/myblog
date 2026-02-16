@@ -4,7 +4,8 @@ import AddNewCategory from "./_components/AddNewCategory";
 import CategoryCard from "./_components/CategoryCard";
 import { GameSettingCategoryWithWordsCount } from "./gameSetting-type";
 import EditCategory from "./_components/EditCategory";
-import { GameWordCategory } from "@prisma/client";
+import { GameWordCategory } from "@/types/game";
+import { getGameWordCategoriesWithCount } from "@/lib/nestApi";
 
 const GameSettingPage = () => {
   const [allCategories, setAllCategories] = useState<
@@ -17,11 +18,13 @@ const GameSettingPage = () => {
   useEffect(() => {
     async function getAllGameWordCategory() {
       setStatus("pending");
-      const response = await fetch("/api/games/settings/games-word/category");
-      const result =
-        (await response.json()) as GameSettingCategoryWithWordsCount[];
-      setStatus("success");
-      setAllCategories(result);
+      try {
+        const result = await getGameWordCategoriesWithCount();
+        setStatus("success");
+        setAllCategories(result as GameSettingCategoryWithWordsCount[]);
+      } catch {
+        setStatus("error");
+      }
     }
     getAllGameWordCategory();
   }, []);

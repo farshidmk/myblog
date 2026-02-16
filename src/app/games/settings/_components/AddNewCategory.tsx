@@ -5,7 +5,7 @@ import { GameSettingWordCategoryForm } from "../gameSetting-type";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { wordCategoryValidation } from "../gameSettingValidations";
 import UserInputWrapper from "@/components/ui/userInputWrapper/UserInputWrapper";
-import { createGameWordCategory } from "@/app/games/settings/_actions/gameWord";
+import { createGameWordCategory } from "@/lib/nestApi";
 
 const AddNewCategory = () => {
   const {

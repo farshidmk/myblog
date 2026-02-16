@@ -1,5 +1,13 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import {
+  createSpyCategory,
+  createSpyWord,
+  deleteSpyCategory,
+  deleteSpyWord,
+  getSpyCategories,
+  getSpyWords,
+} from "@/lib/nestApi";
 
 interface Category {
   id: string;
@@ -26,51 +34,41 @@ const SpyGamePage = () => {
   }, []);
 
   const fetchCategories = async () => {
-    const response = await fetch("/api/spy/categories");
-    const data = await response.json();
+    const data = await getSpyCategories();
     setCategories(data);
   };
 
   const fetchWords = async () => {
-    const response = await fetch("/api/spy/words");
-    const data = await response.json();
+    const data = await getSpyWords();
     setWords(data);
   };
 
   // Category CRUD operations
   const addCategory = async (e: React.FormEvent) => {
     e.preventDefault();
-    await fetch("/api/spy/categories", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: newCategory }),
-    });
+    await createSpyCategory(newCategory);
     setNewCategory("");
     fetchCategories();
   };
 
   const deleteCategory = async (id: string) => {
-    await fetch(`/api/spy/categories/${id}`, { method: "DELETE" });
+    await deleteSpyCategory(id);
     fetchCategories();
   };
 
   // Word CRUD operations
   const addWord = async (e: React.FormEvent) => {
     e.preventDefault();
-    await fetch("/api/spy/words", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        word: newWord,
-        categoryId: selectedCategory,
-      }),
+    await createSpyWord({
+      word: newWord,
+      categoryId: selectedCategory,
     });
     setNewWord("");
     fetchWords();
   };
 
   const deleteWord = async (id: string) => {
-    await fetch(`/api/spy/words/${id}`, { method: "DELETE" });
+    await deleteSpyWord(id);
     fetchWords();
   };
 

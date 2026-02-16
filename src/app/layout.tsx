@@ -3,8 +3,8 @@ import "./globals.css";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
 import { Vazirmatn } from "next/font/google";
-import { SessionProvider } from "next-auth/react";
 import { Bounce, ToastContainer } from "react-toastify";
+import AppProviders from "@/components/providers/AppProviders";
 
 const vazirmatn = Vazirmatn({
   subsets: ["arabic"],
@@ -41,11 +41,11 @@ export default function RootLayout({
           transition={Bounce}
         />
 
-        <SessionProvider>
+        <AppProviders>
           <Navbar />
           <main className="flex-1 overflow-y-auto">{children}</main>
           <Footer />
-        </SessionProvider>
+        </AppProviders>
       </body>
     </html>
   );

@@ -1,11 +1,8 @@
 "use client";
 
-import {
-  getAllGameWordByCategory,
-  saveGameWord,
-} from "@/app/games/settings/_actions/gameWord";
+import { getWordsByCategory, saveGameWord } from "@/lib/nestApi";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Difficulty, GameWord, GameWordCategory } from "@prisma/client";
+import { Difficulty, GameWord, GameWordCategory } from "@/types/game";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { wordValidation } from "../gameSettingValidations";
@@ -49,7 +46,7 @@ const WordsOfCategory = ({ categoryId }: Props) => {
   useEffect(() => {
     async function getAllWordsByCategory() {
       setstatus("pending");
-      const res = await getAllGameWordByCategory(categoryId);
+      const res = await getWordsByCategory(categoryId);
       if (res.success) {
         setAllWords(res.data!);
         setstatus("success");

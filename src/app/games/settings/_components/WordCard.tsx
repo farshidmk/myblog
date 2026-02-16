@@ -1,12 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Difficulty, GameWord } from "@prisma/client";
+import { Difficulty, GameWord } from "@/types/game";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { wordValidation } from "../gameSettingValidations";
 import { z } from "zod";
 import { CheckCircle, CircleX, Pencil } from "lucide-react";
-import { editGameWord } from "../_actions/gameWord";
 import { toast } from "react-toastify";
+import { editGameWord } from "@/lib/nestApi";
 
 type Props = {
   word: GameWord;
