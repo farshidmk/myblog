@@ -3,17 +3,10 @@ import {
   QueryFunction,
   QueryKey,
 } from "@tanstack/react-query";
-import axios, { AxiosError, AxiosRequestConfig, Method } from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import { clearStoredSession, getAccessToken } from "./auth-storage";
 
-function normalizeApiUrl(raw: string | undefined) {
-  const value = (raw || "").trim().replace(/^['"]|['"]$/g, "");
-  if (!value) return "";
-  if (/^https?:\/\//i.test(value)) return value;
-  return `http://${value}`;
-}
-
-export const API_URL = normalizeApiUrl(process.env.NEXT_PUBLIC_API_URL);
+export const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const api = axios.create({
   baseURL: API_URL,
   withCredentials: true,

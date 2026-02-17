@@ -5,19 +5,48 @@ import { useForm } from "react-hook-form";
 import { signInSchema } from "../auth-validation";
 import { useState } from "react";
 import Alert from "@/components/ui/alert/Alert";
-import { useRouter } from "next/navigation";
 import AuthFormLayout from "../AuthFormLayout";
 import Link from "next/link";
 import { UserRoundPlus } from "lucide-react";
 import { z } from "zod";
+import { useMutation } from "@tanstack/react-query";
+import { LoginResponse } from "@/types/User";
+import { AxiosRequestConfig } from "axios";
+import { AuthSession } from "@/lib/auth-storage";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/components/providers/AuthProvider";
+
+type LoginPayload = {
+  identifier: string;
+  password: string;
+};
 
 type LoginForm = z.infer<typeof signInSchema>;
 
 const Login = () => {
-  const [serverError, setServerError] = useState("");
   const router = useRouter();
-  const { login } = useAuth();
+  const { setAuthSession } = useAuth();
+  const [serverError, setServerError] = useState("");
+  const mapLoginResponseToSession = (response: LoginResponse): AuthSession => {
+    return {
+      accessToken: response.access_token,
+      user: {
+        id: response.user.id,
+        email: response.user.email,
+        username: response.user.username ?? null,
+        firstName: response.user.firstName ?? null,
+        lastName: response.user.lastName ?? null,
+        phone: response.user.phone ?? null,
+        role: response.user.role,
+      },
+    };
+  };
+
+  const { mutate, isPending } = useMutation<
+    LoginResponse,
+    Error,
+    AxiosRequestConfig<LoginPayload>
+  >({});
 
   const {
     register,
@@ -27,18 +56,28 @@ const Login = () => {
     resolver: zodResolver(signInSchema),
   });
 
-  const onSubmit = async (data: LoginForm) => {
-    try {
-      setServerError("");
-      await login({
-        identifier: data.username,
-        password: data.password,
-      });
-      router.push("/");
-    } catch (error) {
-      setServerError("خطا در ورود. اطلاعات را بررسی کنید.");
-      console.log(error);
-    }
+  const onSubmit = (data: LoginForm) => {
+    setServerError("");
+    mutate(
+      {
+        url: "auth/login",
+        method: "post",
+        data: {
+          identifier: data.username,
+          password: data.password,
+        },
+      },
+      {
+        onSuccess: (response) => {
+          setAuthSession(mapLoginResponseToSession(response));
+          router.push("/");
+        },
+        onError: (error) => {
+          setServerError("خطا در ورود. اطلاعات را بررسی کنید.");
+          console.log(error);
+        },
+      },
+    );
   };
 
   return (
@@ -83,10 +122,10 @@ const Login = () => {
         <div className="w-full flex items-center justify-center">
           <button
             type="submit"
-            disabled={isSubmitting}
+            disabled={isSubmitting || isPending}
             className="btn btn-wide btn-primary btn-outline mt-5 mb-5 "
           >
-            {isSubmitting ? "در حال ورود..." : "ورود"}
+            {isSubmitting || isPending ? "در حال ورود..." : "ورود"}
           </button>
         </div>
 

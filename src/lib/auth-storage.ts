@@ -5,9 +5,9 @@ export type AuthUser = {
   lastName?: string | null;
   username?: string | null;
   phone?: string | null;
-  role: string;
-  createdAt: string;
-  updatedAt: string;
+  role?: string | null;
+  createdAt?: string | null;
+  updatedAt?: string | null;
 };
 
 export type AuthSession = {
