@@ -11,6 +11,7 @@ import AnimatedBackground from "./_components/AnimatedBackground";
 import CodeAnimation from "./_components/CodeAnimation";
 import FloatingIcons from "./_components/FloatingIcons";
 import SkillIcons from "./_components/SkillIcons";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
   const features = [
@@ -46,14 +47,11 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-mainBg via-white to-lightBg overflow-hidden">
-      {/* Animated Background */}
       <AnimatedBackground />
       <FloatingIcons />
 
-      {/* Hero Section */}
       <section className="relative container mx-auto px-4 py-20 md:py-32">
         <div className="flex flex-col md:flex-row items-center justify-between gap-12 max-w-6xl mx-auto">
-          {/* Text Content */}
           <div className="flex-1 space-y-6 text-center md:text-right z-10">
             <div className="inline-block">
               <h1 className="text-5xl md:text-7xl font-bold mb-2 animate-slide-in-right">
@@ -93,17 +91,16 @@ export default function Home() {
             </p>
 
             <div className="flex gap-4 justify-center md:justify-start animate-slide-in-right animation-delay-600">
-              <button className="btn btn-primary btn-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+              <Button size="lg" className="shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
                 دانلود رزومه
-              </button>
+              </Button>
               <Link href="/blog">
-                <button className="btn btn-outline btn-lg hover:shadow-lg transition-all duration-300 hover:scale-105 hover:text-black">
+                <Button variant="outline" size="lg" className="hover:shadow-lg transition-all duration-300 hover:scale-105 hover:text-black">
                   مشاهده بلاگ
-                </button>
+                </Button>
               </Link>
             </div>
 
-            {/* Social Links */}
             <div className="flex gap-4 justify-center md:justify-start pt-4 animate-slide-in-right animation-delay-800">
               <a
                 href="https://github.com"
@@ -124,14 +121,12 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Code Animation */}
           <div className="flex-1 animate-slide-in-left">
             <CodeAnimation />
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
       <section className="relative py-20 bg-white/50 backdrop-blur-sm">
         <div className="container mx-auto px-4 max-w-6xl">
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 animate-fade-in">
@@ -145,25 +140,19 @@ export default function Home() {
                   className="group relative p-6 bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 cursor-pointer animate-fade-in-up overflow-hidden"
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
-                  {/* Background gradient on hover */}
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                  {/* Icon */}
                   <div
                     className={`${feature.color} w-16 h-16 rounded-xl flex items-center justify-center text-white mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 relative z-10`}
                   >
                     {feature.icon}
                   </div>
 
-                  {/* Content */}
                   <h3 className="text-xl font-bold mb-2 relative z-10">
                     {feature.title}
                   </h3>
-                  <p className="text-gray-600 relative z-10">
-                    {feature.description}
-                  </p>
+                  <p className="text-gray-600 relative z-10">{feature.description}</p>
 
-                  {/* Decorative element */}
                   <div className="absolute -bottom-2 -left-2 w-20 h-20 bg-primary/5 rounded-full blur-xl group-hover:scale-150 transition-transform duration-500" />
                 </div>
               </Link>
@@ -172,7 +161,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Skills Section */}
       <section className="relative py-20">
         <div className="container mx-auto px-4 max-w-6xl">
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 animate-fade-in">

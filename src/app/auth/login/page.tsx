@@ -15,6 +15,8 @@ import { AxiosRequestConfig } from "axios";
 import { AuthSession } from "@/lib/auth-storage";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/components/providers/AuthProvider";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 type LoginPayload = {
   identifier: string;
@@ -27,6 +29,7 @@ const Login = () => {
   const router = useRouter();
   const { setAuthSession } = useAuth();
   const [serverError, setServerError] = useState("");
+
   const mapLoginResponseToSession = (response: LoginResponse): AuthSession => {
     return {
       accessToken: response.access_token,
@@ -73,7 +76,7 @@ const Login = () => {
           router.push("/");
         },
         onError: (error) => {
-          setServerError("خطا در ورود. اطلاعات را بررسی کنید.");
+          setServerError("??? ?? ????. ??????? ?? ????? ????.");
           console.log(error);
         },
       },
@@ -81,18 +84,17 @@ const Login = () => {
   };
 
   return (
-    <AuthFormLayout title="ورود">
+    <AuthFormLayout title="????">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="w-full flex flex-col gap-1 mb-2">
           <label className="text-base font-semibold" htmlFor="username">
-            نام کاربری
+            ??? ??????
           </label>
-          <input
+          <Input
             id="username"
             type="text"
             {...register("username")}
-            placeholder="نام کاربری یا تلفن همراه یا ایمیل را وارد کنید"
-            className="input input-sm"
+            placeholder="??? ?????? ?? ???? ????? ?? ????? ?? ???? ????"
           />
           {errors.username && (
             <p className="text-sm text-red-600">{errors.username.message}</p>
@@ -101,14 +103,13 @@ const Login = () => {
 
         <div className="w-full flex flex-col gap-1">
           <label className="text-base font-semibold" htmlFor="password">
-            رمز
+            ???
           </label>
-          <input
+          <Input
             id="password"
             type="password"
             {...register("password")}
-            placeholder="رمز عبور را وارد کنید..."
-            className="input input-sm"
+            placeholder="??? ???? ?? ???? ????..."
           />
           {errors.password && (
             <p className="text-sm text-red-600">{errors.password.message}</p>
@@ -120,19 +121,20 @@ const Login = () => {
         )}
 
         <div className="w-full flex items-center justify-center">
-          <button
+          <Button
             type="submit"
             disabled={isSubmitting || isPending}
-            className="btn btn-wide btn-primary btn-outline mt-5 mb-5 "
+            variant="outline"
+            className="w-full max-w-xs mt-5 mb-5"
           >
-            {isSubmitting || isPending ? "در حال ورود..." : "ورود"}
-          </button>
+            {isSubmitting || isPending ? "?? ??? ????..." : "????"}
+          </Button>
         </div>
 
         <Link href="/auth/sign-up">
           <p className="no-underline font-semibold text-accent flex items-center gap-1">
             <UserRoundPlus />
-            ثبت نام در سایت
+            ??? ??? ?? ????
           </p>
         </Link>
       </form>

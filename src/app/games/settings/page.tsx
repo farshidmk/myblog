@@ -30,7 +30,7 @@ const GameSettingPage = () => {
   }, []);
 
   if (status === "pending") {
-    return <div className="skeleton h-32 w-full"></div>;
+    return <div className="h-32 w-full animate-pulse rounded-xl bg-gray-200" />;
   }
   return (
     <div className="w-full">

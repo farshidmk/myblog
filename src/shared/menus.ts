@@ -1,4 +1,4 @@
-export const MENUS: Menu[] = [
+﻿export const MENUS: Menu[] = [
   {
     title: "بازی",
     path: "/games",

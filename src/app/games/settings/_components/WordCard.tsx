@@ -7,6 +7,7 @@ import { z } from "zod";
 import { CheckCircle, CircleX, Pencil } from "lucide-react";
 import { toast } from "react-toastify";
 import { editGameWord } from "@/lib/nestApi";
+import Spinner from "@/components/ui/spinner";
 
 type Props = {
   word: GameWord;
@@ -37,7 +38,7 @@ const WordCard = ({ word }: Props) => {
     }
     setValue("word", result.data!.word!);
     setValue("difficulty", result.data!.difficulty!);
-    toast.success(`کلمه با موفقیت به روزرسانی شد`);
+    toast.success("???? ?? ?????? ?? ???????? ??");
     setIsEditing(false);
   };
 
@@ -49,22 +50,22 @@ const WordCard = ({ word }: Props) => {
           className="flex items-center gap-2 h-full"
         >
           {isSubmitting ? (
-            <span className="loading loading-dots loading-xs"></span>
+            <Spinner className="h-4 w-4" />
           ) : (
             <>
               <div>
                 <input
                   {...register("word")}
                   className="border border-gray-300 px-3 py-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="کلمه"
+                  placeholder="????"
                 />
                 <select
                   {...register("difficulty")}
                   className="border border-gray-300 px-3 py-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                  <option value={Difficulty.easy}>آسان</option>
-                  <option value={Difficulty.medium}>متوسط</option>
-                  <option value={Difficulty.hard}>سخت</option>
+                  <option value={Difficulty.easy}>????</option>
+                  <option value={Difficulty.medium}>?????</option>
+                  <option value={Difficulty.hard}>???</option>
                 </select>
               </div>
               <div className="flex justify-between gap-2">
@@ -97,8 +98,8 @@ const WordCard = ({ word }: Props) => {
                 difficulty === Difficulty.easy
                   ? "bg-green-100 text-green-800"
                   : difficulty === Difficulty.medium
-                  ? "bg-yellow-100 text-yellow-800"
-                  : "bg-red-100 text-red-800"
+                    ? "bg-yellow-100 text-yellow-800"
+                    : "bg-red-100 text-red-800"
               }`}
             >
               {difficultyEnumToText(difficulty)}
@@ -121,11 +122,11 @@ export default WordCard;
 function difficultyEnumToText(difficulty: Difficulty) {
   switch (difficulty) {
     case Difficulty.easy:
-      return "آسان";
+      return "????";
     case Difficulty.medium:
-      return "متوسط";
+      return "?????";
     case Difficulty.hard:
-      return "سخت";
+      return "???";
 
     default:
       break;

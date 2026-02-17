@@ -1,10 +1,9 @@
-"use client";
+﻿"use client";
 import { MENUS } from "@/shared/menus";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
-import logo from "/public/logo.png";
 import AuthButton from "./authButton/AuthButton";
 
 const Navbar = () => {
@@ -30,9 +29,9 @@ const Navbar = () => {
         </ul>
         <div className="flex gap-3 items-center">
           <AuthButton />
-          <Link href={"/"} className="text-xl font-bold">
+          <Link href="/" className="text-xl font-bold">
             <Image
-              src={logo}
+              src="/logo.png"
               alt="farshid"
               width={50}
               height={50}

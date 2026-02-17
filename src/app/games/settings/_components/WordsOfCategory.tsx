@@ -11,6 +11,10 @@ import { CirclePlus } from "lucide-react";
 import { z } from "zod";
 import { toast } from "react-toastify";
 import WordCard from "./WordCard";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import Spinner from "@/components/ui/spinner";
 
 type Props = {
   categoryId: GameWordCategory["id"];
@@ -37,9 +41,9 @@ const WordsOfCategory = ({ categoryId }: Props) => {
   async function onSubmit(value: EditWordForm) {
     const response = await saveGameWord(value);
     if (!response.success) {
-      toast.error(response.errors?.join(" , ") || "خطا در انجام عملیات");
+      toast.error(response.errors?.join(" , ") || "??? ?? ????? ??????");
     } else {
-      toast.success(`کلمه ${value.word} اضافه شد`);
+      toast.success(`???? ${value.word} ????? ??`);
     }
   }
 
@@ -56,7 +60,7 @@ const WordsOfCategory = ({ categoryId }: Props) => {
   }, [categoryId]);
 
   if (status === "pending") {
-    return <span className="loading loading-bars loading-xl"></span>;
+    return <Spinner className="h-8 w-8" />;
   }
 
   return (
@@ -66,62 +70,59 @@ const WordsOfCategory = ({ categoryId }: Props) => {
           <WordCard word={w} key={w.id} />
         ))}
       </div>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="card bg-base-100 shadow-md hover:shadow-lg transition-shadow border w-full max-w-md"
-      >
-        {isSubmitting ? (
-          <div className="skeleton h-full w-full"></div>
-        ) : (
-          <div className="card-body flex flex-row items-center justify-between w-full gap-2">
-            <UserInputWrapper label="کلمه" error={errors?.word?.message}>
-              <input
+      <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-md">
+        <Card className="shadow-md hover:shadow-lg transition-shadow">
+          <CardContent className="p-3 flex flex-row items-center justify-between w-full gap-2">
+            <UserInputWrapper label="????" error={errors?.word?.message}>
+              <Input
                 id="name"
                 type="text"
                 {...register("word")}
-                placeholder=" کلمه را وارد کنید..."
-                className="input input-sm border border-gray-300"
+                placeholder=" ???? ?? ???? ????..."
+                className="h-9"
               />
             </UserInputWrapper>
 
             <UserInputWrapper
-              label="درجه سختی"
+              label="???? ????"
               error={errors?.difficulty?.message}
             >
               <select
                 id="difficulty"
                 {...register("difficulty")}
-                className="input input-sm border border-gray-300"
+                className="h-9 rounded-md border border-gray-300 bg-white px-3 py-2 text-sm"
               >
                 <option
                   value={Difficulty.easy}
                   className="font-semibold text-base text-green-400"
                 >
-                  آسان
+                  ????
                 </option>
                 <option
                   value={Difficulty.medium}
                   className="font-semibold text-base text-amber-400"
                 >
-                  متوسط
+                  ?????
                 </option>
                 <option
                   value={Difficulty.hard}
                   className="font-semibold text-base text-red-400"
                 >
-                  سخت
+                  ???
                 </option>
               </select>
             </UserInputWrapper>
 
-            <button
-              className="btn btn-sm btn-ghost h-10 w-20"
+            <Button
+              size="sm"
+              variant="ghost"
+              className="h-10 w-20"
               disabled={isSubmitting}
             >
-              <CirclePlus className="h-10 w-10 text-primary hover:text-primary-focus disabled:text-gray-300 transition-all" />
-            </button>
-          </div>
-        )}
+              <CirclePlus className="h-5 w-5 text-primary" />
+            </Button>
+          </CardContent>
+        </Card>
       </form>
     </div>
   );

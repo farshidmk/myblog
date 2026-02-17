@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Github, Linkedin, Mail, Phone, MapPin, Code2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -36,7 +37,6 @@ export default function Footer() {
 
   return (
     <footer className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
-      {/* Hire Me Section */}
       <div className="bg-gradient-to-r from-primary to-secondary py-16">
         <div className="container mx-auto px-4 max-w-4xl text-center">
           <div className="inline-block mb-4">
@@ -52,33 +52,38 @@ export default function Footer() {
             دارید، خوشحال می‌شم که بتونم کمک کنم.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in animation-delay-400">
-            <a
-              href="mailto:farshid@example.com"
-              className="btn btn-lg bg-white text-primary hover:bg-lightBg border-none shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
+            <Button
+              size="lg"
+              className="bg-white text-primary hover:bg-lightBg shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
+              onClick={() => {
+                window.location.href = "mailto:farshid@example.com";
+              }}
             >
               <Mail size={20} className="ml-2" />
               ارسال ایمیل
-            </a>
-            <a
-              href="tel:+989123456789"
-              className="btn btn-lg btn-outline border-white text-white hover:bg-white hover:text-primary shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="border-white text-white hover:bg-white hover:text-primary shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
+              onClick={() => {
+                window.location.href = "tel:+989123456789";
+              }}
             >
               <Phone size={20} className="ml-2" />
               تماس تلفنی
-            </a>
+            </Button>
           </div>
         </div>
       </div>
 
-      {/* Main Footer Content */}
       <div className="container mx-auto px-4 py-12 max-w-6xl">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-          {/* About Section */}
           <div className="space-y-4">
             <h3 className="text-2xl font-bold text-primary mb-4">فرشید</h3>
             <p className="text-gray-300 leading-relaxed">
-              برنامه‌نویس وب و عاشق یادگیری. متخصص در React، Next.js و
-              Node.js. همیشه در حال یادگیری و به اشتراک‌گذاری دانش.
+              برنامه‌نویس وب و عاشق یادگیری. متخصص در React، Next.js و Node.js.
+              همیشه در حال یادگیری و به اشتراک‌گذاری دانش.
             </p>
             <div className="flex gap-3 pt-2">
               {socialLinks.map((social, index) => (
@@ -96,7 +101,6 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Quick Links */}
           <div className="space-y-4">
             <h3 className="text-xl font-bold mb-4">لینک‌های سریع</h3>
             <ul className="space-y-3">
@@ -114,7 +118,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Contact Info */}
           <div className="space-y-4">
             <h3 className="text-xl font-bold mb-4">اطلاعات تماس</h3>
             <ul className="space-y-4">
@@ -122,10 +125,7 @@ export default function Footer() {
                 <Mail size={20} className="text-primary mt-1 flex-shrink-0" />
                 <div>
                   <p className="font-semibold text-white mb-1">ایمیل</p>
-                  <a
-                    href="mailto:farshid@example.com"
-                    className="hover:text-primary transition-colors"
-                  >
+                  <a href="mailto:farshid@example.com" className="hover:text-primary transition-colors">
                     farshid@example.com
                   </a>
                 </div>
@@ -134,10 +134,7 @@ export default function Footer() {
                 <Phone size={20} className="text-primary mt-1 flex-shrink-0" />
                 <div>
                   <p className="font-semibold text-white mb-1">تلفن</p>
-                  <a
-                    href="tel:+989123456789"
-                    className="hover:text-primary transition-colors"
-                  >
+                  <a href="tel:+989123456789" className="hover:text-primary transition-colors">
                     +98 912 345 6789
                   </a>
                 </div>
@@ -153,22 +150,17 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Divider */}
         <div className="border-t border-gray-700 my-8"></div>
 
-        {/* Bottom Footer */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-gray-400 text-sm">
-          <p>
-            © {currentYear} فرشید. تمامی حقوق محفوظ است.
-          </p>
+          <p>© {currentYear} فرشید. تمامی حقوق محفوظ است.</p>
           <p className="flex items-center gap-2">
-            ساخته شده با{" "}
-            <span className="text-red-500 animate-pulse">❤</span> با Next.js
+            ساخته شده با <span className="text-red-500 animate-pulse">❤</span>{" "}
+            با Next.js
           </p>
         </div>
       </div>
 
-      {/* Decorative Elements */}
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-secondary to-accent"></div>
     </footer>
   );

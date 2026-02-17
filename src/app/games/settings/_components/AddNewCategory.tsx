@@ -6,6 +6,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { wordCategoryValidation } from "../gameSettingValidations";
 import UserInputWrapper from "@/components/ui/userInputWrapper/UserInputWrapper";
 import { createGameWordCategory } from "@/lib/nestApi";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 const AddNewCategory = () => {
   const {
@@ -24,38 +27,36 @@ const AddNewCategory = () => {
       reset();
     }
   }
+
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="card bg-base-100 shadow-md hover:shadow-lg transition-shadow border w-60 "
-    >
-      {isSubmitting ? (
-        <div className="skeleton h-full w-full"></div>
-      ) : (
-        <div className="card-body px-2 flex flex-row items-center justify-between w-full">
+    <form onSubmit={handleSubmit(onSubmit)} className="w-60">
+      <Card className="shadow-md hover:shadow-lg transition-shadow">
+        <CardContent className="px-2 py-3 flex flex-row items-center justify-between w-full">
           <div className="w-2/3">
             <UserInputWrapper
-              label="نام دسته بندی"
+              label="??? ???? ????"
               error={errors?.name?.message}
             >
-              <input
+              <Input
                 id="name"
                 type="text"
                 {...register("name")}
-                placeholder="دسته بندی را وارد کنید..."
-                className="input input-sm border border-gray-300 flex-1"
+                placeholder="???? ???? ?? ???? ????..."
+                className="h-9"
               />
             </UserInputWrapper>
           </div>
 
-          <button
-            className="btn btn-sm btn-ghost h-10 w-1/3"
+          <Button
+            size="sm"
+            variant="ghost"
+            className="h-10 w-1/3"
             disabled={isSubmitting || !Boolean(watch("name"))}
           >
-            <CirclePlus className="h-10 w-10 text-primary hover:text-primary-focus disabled:text-gray-300 transition-all" />
-          </button>
-        </div>
-      )}
+            <CirclePlus className="h-5 w-5 text-primary" />
+          </Button>
+        </CardContent>
+      </Card>
     </form>
   );
 };
