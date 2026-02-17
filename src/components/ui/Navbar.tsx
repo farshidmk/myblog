@@ -145,20 +145,23 @@ const Navbar = () => {
       {isMobileMenuOpen && (
         <div className="border-t border-slate-200 bg-white px-4 py-4 md:hidden">
           <ul className="space-y-2">
-            {MENUS.map((item) => (
-              <li key={item.path}>
-                <Link
-                  href={item.path}
-                  className={
-                    isActive(item.path)
-                      ? "block rounded-lg bg-slate-900 px-3 py-2 text-sm font-semibold text-white"
-                      : "block rounded-lg px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100"
-                  }
-                >
-                  {item.title}
-                </Link>
-              </li>
-            ))}
+            {MENUS.map((item) => {
+              if (item.isAdminOnly && user?.role !== UserRole.Admin) return null;
+              return (
+                <li key={item.path}>
+                  <Link
+                    href={item.path}
+                    className={
+                      isActive(item.path)
+                        ? "block rounded-lg bg-slate-900 px-3 py-2 text-sm font-semibold text-white"
+                        : "block rounded-lg px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100"
+                    }
+                  >
+                    {item.title}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
 
           <div className="mt-4 border-t border-slate-200 pt-4">

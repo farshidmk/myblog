@@ -7,10 +7,6 @@ import axios, { AxiosRequestConfig } from "axios";
 import { clearStoredSession, getAccessToken } from "./auth-storage";
 
 export const API_URL = process.env.NEXT_PUBLIC_API_URL;
-const api = axios.create({
-  baseURL: API_URL,
-  withCredentials: true,
-});
 
 export const apiClient = axios.create({
   baseURL: API_URL,
@@ -47,7 +43,7 @@ export const serverCall: MutationFunction<unknown, unknown> = async (
       data,
       ...rest,
     };
-    const response = await api({ ...requestOptions });
+    const response = await apiClient({ ...requestOptions });
     if (response?.status === 200 || response?.status === 201) {
       return response?.data;
     } else {

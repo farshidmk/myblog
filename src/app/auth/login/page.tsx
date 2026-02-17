@@ -16,6 +16,7 @@ import { useAuth } from "@/components/providers/AuthProvider";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { mapLoginResponseToSession } from "./_services/mapLoginResponse";
 
 type LoginPayload = {
   identifier: string;
@@ -33,21 +34,6 @@ const Login = () => {
   const router = useRouter();
   const { setAuthSession } = useAuth();
   const [serverError, setServerError] = useState("");
-
-  const mapLoginResponseToSession = (response: LoginResponse): AuthSession => {
-    return {
-      accessToken: response.access_token,
-      user: {
-        id: response.user.id,
-        email: response.user.email,
-        username: response.user.username ?? null,
-        firstName: response.user.firstName ?? null,
-        lastName: response.user.lastName ?? null,
-        phone: response.user.phone ?? null,
-        role: response.user.role,
-      },
-    };
-  };
 
   const { mutate, isPending } = useMutation<
     LoginResponse,

@@ -131,7 +131,10 @@ export default function Footer() {
             className="mt-2 inline-flex items-center justify-center gap-1 md:mt-0"
             dir="ltr"
           >
-            made with
+            <span>
+              <span className="font-bold">M</span>ade{" "}
+              <span className="font-bold">W</span>ith
+            </span>
             <Heart className="h-3.5 w-3.5 fill-rose-500 text-rose-500" />
           </p>
         </div>
