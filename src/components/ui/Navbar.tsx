@@ -16,6 +16,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../providers/AuthProvider";
 import { Button } from "./button";
 import Spinner from "./spinner";
+import { UserRole } from "@/types/User";
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -58,20 +59,23 @@ const Navbar = () => {
         </Link>
 
         <ul className="hidden items-center gap-2 rounded-full border border-slate-200 bg-white px-2 py-1 md:flex">
-          {MENUS.map((item) => (
-            <li key={item.path}>
-              <Link
-                href={item.path}
-                className={
-                  isActive(item.path)
-                    ? "rounded-full bg-slate-900 px-4 py-2 text-sm font-bold text-white"
-                    : "rounded-full px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
-                }
-              >
-                {item.title}
-              </Link>
-            </li>
-          ))}
+          {MENUS.map((item) => {
+            if (item.isAdminOnly && user?.role !== UserRole.Admin) return null;
+            return (
+              <li key={item.path}>
+                <Link
+                  href={item.path}
+                  className={
+                    isActive(item.path)
+                      ? "rounded-full bg-slate-900 px-4 py-2 text-sm font-bold text-white"
+                      : "rounded-full px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-100"
+                  }
+                >
+                  {item.title}
+                </Link>
+              </li>
+            );
+          })}
         </ul>
 
         <div className="flex items-center gap-2">

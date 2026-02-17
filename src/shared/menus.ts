@@ -11,4 +11,9 @@
     title: "برنامه",
     path: "/utils",
   },
+  {
+    title: "تنظیمات",
+    path: "/settings",
+    isAdminOnly: true,
+  },
 ];
