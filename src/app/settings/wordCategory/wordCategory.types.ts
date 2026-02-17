@@ -1,7 +1,7 @@
 export type WordCategory = {
   id: number | string;
   name: string;
-  _count: {
+  _count?: {
     words: number;
   };
 };

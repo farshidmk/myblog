@@ -141,7 +141,7 @@ export default function WordCategoryPage() {
                         <div>
                           <p className="inline-flex items-center gap-2 rounded-full border border-slate-900 bg-slate-200 px-3 py-1 text-xs font-semibold">
                             <AlbumIcon className="h-3.5 w-3.5" />
-                            {category._count.words} کلمه
+                            {category._count?.words ?? 0} کلمه
                           </p>
                         </div>
                       </div>
@@ -186,7 +186,7 @@ export default function WordCategoryPage() {
                         حذف
                       </Button>
 
-                      <Link href={`/settings/words?categoryId=${category.id}`}>
+                      <Link href={`/settings/words/category/${category.id}`}>
                         <Button type="button" size="sm" variant="secondary">
                           نمایش کلمات
                           <ArrowLeft className="mr-1 h-4 w-4" />
