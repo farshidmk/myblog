@@ -1,116 +1,98 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
-import { Github, Linkedin, Mail, Phone, MapPin, Code2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { usePathname } from "next/navigation";
+import {
+  ArrowUpLeft,
+  Github,
+  Heart,
+  Linkedin,
+  Mail,
+  MapPin,
+  Phone,
+  Sparkles,
+} from "lucide-react";
+
+const quickLinks = [
+  { title: "خانه", path: "/" },
+  { title: "بلاگ", path: "/blog" },
+  { title: "بازی‌ها", path: "/games" },
+  { title: "ابزارها", path: "/utils" },
+];
 
 export default function Footer() {
+  const pathname = usePathname();
   const currentYear = new Date().getFullYear();
 
-  const socialLinks = [
-    {
-      name: "GitHub",
-      icon: <Github size={20} />,
-      url: "https://github.com/farshidmk",
-      color: "hover:text-gray-900",
-    },
-    {
-      name: "LinkedIn",
-      icon: <Linkedin size={20} />,
-      url: "https://linkedin.com/in/farshidmk",
-      color: "hover:text-blue-600",
-    },
-    {
-      name: "Email",
-      icon: <Mail size={20} />,
-      url: "mailto:farshid@example.com",
-      color: "hover:text-primary",
-    },
-  ];
-
-  const quickLinks = [
-    { title: "خانه", path: "/" },
-    { title: "بلاگ", path: "/blog" },
-    { title: "بازی‌ها", path: "/games" },
-    { title: "درباره من", path: "#about" },
-  ];
+  if (pathname.startsWith("/auth")) {
+    return null;
+  }
 
   return (
-    <footer className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
-      <div className="bg-gradient-to-r from-primary to-secondary py-16">
-        <div className="container mx-auto px-4 max-w-4xl text-center">
-          <div className="inline-block mb-4">
-            <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto backdrop-blur-sm animate-bounce-slow">
-              <Code2 size={32} className="text-white" />
+    <footer className="relative border-t border-slate-300 bg-gradient-to-b from-slate-100 to-slate-200/80">
+      <div className="container mx-auto max-w-6xl px-4 py-10">
+        <div className="mb-8 rounded-2xl border border-teal-100 bg-gradient-to-r from-teal-600 to-cyan-600 p-6 text-white shadow-xl">
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <div>
+              <p className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-3 py-1 text-xs font-semibold">
+                <Sparkles className="h-3.5 w-3.5" />
+                آماده همکاری
+              </p>
+              <h3 className="mt-3 text-2xl font-black">
+                پروژه جدیدی تو ذهنت داری؟
+              </h3>
+              <p className="mt-2 text-sm text-cyan-50">
+                برای همکاری در توسعه ایده ات خوشحال میشم کمکت کنم ;)
+              </p>
             </div>
-          </div>
-          <h2 className="text-3xl md:text-5xl font-bold mb-4 animate-fade-in">
-            بیا با هم کار کنیم!
-          </h2>
-          <p className="text-lg md:text-xl text-white/90 mb-8 animate-fade-in animation-delay-200 max-w-2xl mx-auto">
-            اگر دوست دارید توی پروژه‌ای همکاری کنیم یا نیاز به انجام پروژه‌ای
-            دارید، خوشحال می‌شم که بتونم کمک کنم.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in animation-delay-400">
-            <Button
-              size="lg"
-              className="bg-white text-primary hover:bg-lightBg shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
-              onClick={() => {
-                window.location.href = "mailto:farshid@example.com";
-              }}
+            <a
+              href="mailto:farshid@example.com"
+              className="inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-bold text-teal-700 transition hover:bg-slate-100"
             >
-              <Mail size={20} className="ml-2" />
               ارسال ایمیل
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-white text-white hover:bg-white hover:text-primary shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105"
-              onClick={() => {
-                window.location.href = "tel:+989123456789";
-              }}
-            >
-              <Phone size={20} className="ml-2" />
-              تماس تلفنی
-            </Button>
+              <ArrowUpLeft className="h-4 w-4" />
+            </a>
           </div>
         </div>
-      </div>
 
-      <div className="container mx-auto px-4 py-12 max-w-6xl">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-          <div className="space-y-4">
-            <h3 className="text-2xl font-bold text-primary mb-4">فرشید</h3>
-            <p className="text-gray-300 leading-relaxed">
-              برنامه‌نویس وب و عاشق یادگیری. متخصص در React، Next.js و Node.js.
-              همیشه در حال یادگیری و به اشتراک‌گذاری دانش.
+        <div className="grid gap-8 md:grid-cols-3">
+          <div>
+            <h4 className="text-lg font-black text-slate-900">FarshidMK</h4>
+            <p className="mt-3 text-sm leading-7 text-slate-600">
+              وب‌سایت شخصی برای انتشار مقاله‌های فنی، ساخت بازی آنلاین و توسعه
+              ابزارهای کوچک اما کاربردی.
             </p>
-            <div className="flex gap-3 pt-2">
-              {socialLinks.map((social, index) => (
-                <a
-                  key={index}
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`p-3 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 hover:scale-110 ${social.color}`}
-                  aria-label={social.name}
-                >
-                  {social.icon}
-                </a>
-              ))}
+            <div className="mt-4 flex items-center gap-2">
+              <a
+                href="https://github.com/farshidmk"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-lg border border-slate-200 p-2 text-slate-600 transition hover:border-teal-200 hover:text-teal-700"
+                aria-label="github"
+              >
+                <Github className="h-4 w-4" />
+              </a>
+              <a
+                href="https://linkedin.com/in/farshidmk"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-lg border border-slate-200 p-2 text-slate-600 transition hover:border-teal-200 hover:text-teal-700"
+                aria-label="linkedin"
+              >
+                <Linkedin className="h-4 w-4" />
+              </a>
             </div>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-xl font-bold mb-4">لینک‌های سریع</h3>
-            <ul className="space-y-3">
-              {quickLinks.map((link, index) => (
-                <li key={index}>
+          <div>
+            <h4 className="text-sm font-bold text-slate-900">دسترسی سریع</h4>
+            <ul className="mt-3 space-y-2 text-sm">
+              {quickLinks.map((link) => (
+                <li key={link.path}>
                   <Link
                     href={link.path}
-                    className="text-gray-300 hover:text-primary transition-colors duration-300 flex items-center gap-2 group"
+                    className="text-slate-600 transition hover:text-teal-700"
                   >
-                    <span className="w-0 group-hover:w-2 h-0.5 bg-primary transition-all duration-300"></span>
                     {link.title}
                   </Link>
                 </li>
@@ -118,50 +100,42 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div className="space-y-4">
-            <h3 className="text-xl font-bold mb-4">اطلاعات تماس</h3>
-            <ul className="space-y-4">
-              <li className="flex items-start gap-3 text-gray-300">
-                <Mail size={20} className="text-primary mt-1 flex-shrink-0" />
-                <div>
-                  <p className="font-semibold text-white mb-1">ایمیل</p>
-                  <a href="mailto:farshid@example.com" className="hover:text-primary transition-colors">
-                    farshid@example.com
-                  </a>
-                </div>
-              </li>
-              <li className="flex items-start gap-3 text-gray-300">
-                <Phone size={20} className="text-primary mt-1 flex-shrink-0" />
-                <div>
-                  <p className="font-semibold text-white mb-1">تلفن</p>
-                  <a href="tel:+989123456789" className="hover:text-primary transition-colors">
-                    +98 912 345 6789
-                  </a>
-                </div>
-              </li>
-              <li className="flex items-start gap-3 text-gray-300">
-                <MapPin size={20} className="text-primary mt-1 flex-shrink-0" />
-                <div>
-                  <p className="font-semibold text-white mb-1">موقعیت</p>
-                  <p>تهران، ایران</p>
-                </div>
-              </li>
-            </ul>
+          <div>
+            <h4 className="text-sm font-bold text-slate-900">اطلاعات تماس</h4>
+            <div className="mt-3 space-y-2 text-sm text-slate-600">
+              <a
+                href="mailto:farshid@example.com"
+                className="flex items-center gap-2 hover:text-teal-700"
+              >
+                <Mail className="h-4 w-4" />
+                farshid@example.com
+              </a>
+              <a
+                href="tel:+989123456789"
+                className="flex items-center gap-2 hover:text-teal-700"
+              >
+                <Phone className="h-4 w-4" />
+                +98 912 345 6789
+              </a>
+              <p className="flex items-center gap-2">
+                <MapPin className="h-4 w-4" />
+                تهران، ایران
+              </p>
+            </div>
           </div>
         </div>
 
-        <div className="border-t border-gray-700 my-8"></div>
-
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-gray-400 text-sm">
-          <p>© {currentYear} فرشید. تمامی حقوق محفوظ است.</p>
-          <p className="flex items-center gap-2">
-            ساخته شده با <span className="text-red-500 animate-pulse">❤</span>{" "}
-            با Next.js
+        <div className="mt-8 border-t border-slate-300 pt-4 text-center text-xs text-slate-600 md:flex md:items-center md:justify-between md:text-right">
+          <p>© {currentYear} FarshidMK - تمامی حقوق محفوظ است.</p>
+          <p
+            className="mt-2 inline-flex items-center justify-center gap-1 md:mt-0"
+            dir="ltr"
+          >
+            made with
+            <Heart className="h-3.5 w-3.5 fill-rose-500 text-rose-500" />
           </p>
         </div>
       </div>
-
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-secondary to-accent"></div>
     </footer>
   );
 }

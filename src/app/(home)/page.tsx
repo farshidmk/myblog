@@ -1,174 +1,243 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import {
-  Code2,
+  ArrowLeft,
+  BookOpenText,
+  Calculator,
   Gamepad2,
-  BookOpen,
+  Globe,
+  Rocket,
+  Sparkles,
   Wrench,
-  Github,
-  Linkedin,
 } from "lucide-react";
-import AnimatedBackground from "./_components/AnimatedBackground";
-import CodeAnimation from "./_components/CodeAnimation";
-import FloatingIcons from "./_components/FloatingIcons";
-import SkillIcons from "./_components/SkillIcons";
 import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import CodeAnimation from "./_components/CodeAnimation";
+import SkillIcons from "./_components/SkillIcons";
+
+const pillars = [
+  {
+    title: "مقاله و یادگیری",
+    description:
+      "انتشار تجربه‌های واقعی برنامه‌نویسی، خلاصه‌ درس‌ها و نکات کاربردی توسعه.",
+    href: "/blog",
+    icon: BookOpenText,
+    accent: "from-emerald-500/20 to-teal-500/10",
+  },
+  {
+    title: "بازی‌های آنلاین",
+    description:
+      "ساخت و تجربه بازی‌های گروهی مثل آوالون، دور و جاسوس با UX سریع و روان.",
+    href: "/games",
+    icon: Gamepad2,
+    accent: "from-orange-500/20 to-amber-500/10",
+  },
+  {
+    title: "ابزارهای کاربردی",
+    description:
+      "اپ‌های سبک برای حل مسئله‌های روزمره مثل محاسبه‌گر ساعت و ابزارهای بهره‌وری.",
+    href: "/utils",
+    icon: Wrench,
+    accent: "from-sky-500/20 to-indigo-500/10",
+  },
+];
+
+const roadmap = [
+  {
+    title: "یادداشت‌های فنی",
+    description: "مقاله‌های کوتاه و بلند با تمرکز روی تجربه واقعی ساخت محصول.",
+  },
+  {
+    title: "گیم‌پلی چندنفره",
+    description: "بهبود بازی‌های فعلی و اضافه‌شدن مودهای آنلاین جدید.",
+  },
+  {
+    title: "ابزارهای میکرو",
+    description: "مجموعه utility app برای کارهای سریع روزانه و مدیریت زمان.",
+  },
+];
 
 export default function Home() {
-  const features = [
-    {
-      icon: <Gamepad2 size={32} />,
-      title: "بازی‌ها",
-      description: "بازی‌های جذاب و سرگرم‌کننده مثل آوالون، دور و جاسوس",
-      color: "bg-primary",
-      link: "/games",
-    },
-    {
-      icon: <BookOpen size={32} />,
-      title: "یادگیری",
-      description: "خلاصه کتاب‌ها، تجربیات و مطالب مفید برنامه‌نویسی",
-      color: "bg-accent",
-      link: "/blog",
-    },
-    {
-      icon: <Wrench size={32} />,
-      title: "ابزارها",
-      description: "ابزارهای کاربردی برای توسعه‌دهندگان و کاربران",
-      color: "bg-secondary",
-      link: "#tools",
-    },
-    {
-      icon: <Code2 size={32} />,
-      title: "پروژه‌ها",
-      description: "نمونه کارها و پروژه‌های شخصی من",
-      color: "bg-primary",
-      link: "#projects",
-    },
-  ];
-
   return (
-    <main className="min-h-screen bg-gradient-to-br from-mainBg via-white to-lightBg overflow-hidden">
-      <AnimatedBackground />
-      <FloatingIcons />
+    <main className="relative overflow-hidden bg-gradient-to-b from-slate-50 via-white to-slate-100/60">
+      <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-80 bg-[radial-gradient(circle_at_top,#99f6e4_0%,transparent_45%)]" />
 
-      <section className="relative container mx-auto px-4 py-20 md:py-32">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-12 max-w-6xl mx-auto">
-          <div className="flex-1 space-y-6 text-center md:text-right z-10">
-            <div className="inline-block">
-              <h1 className="text-5xl md:text-7xl font-bold mb-2 animate-slide-in-right">
-                سلام! من{" "}
-                <span className="text-primary relative inline-block">
-                  فرشید
-                  <svg
-                    className="absolute -bottom-2 left-0 w-full"
-                    height="8"
-                    viewBox="0 0 200 8"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M0 4 Q50 0, 100 4 T200 4"
-                      stroke="#006d77"
-                      strokeWidth="3"
-                      fill="none"
-                      className="animate-draw"
-                    />
-                  </svg>
-                </span>{" "}
-                هستم
-              </h1>
-            </div>
-
-            <p className="text-xl md:text-2xl text-gray-700 animate-slide-in-right animation-delay-200">
-              برنامه‌نویس وب و عاشق{" "}
-              <span className="text-accent font-bold">یادگیری</span>
+      <section className="container mx-auto max-w-6xl px-4 pb-16 pt-16 md:pb-20 md:pt-24">
+        <div className="grid items-center gap-10 lg:grid-cols-2">
+          <div>
+            <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700">
+              <Sparkles className="h-3.5 w-3.5" />
+              وبلاگ شخصی + بازی + ابزار
             </p>
 
-            <p className="text-lg text-gray-600 leading-relaxed max-w-2xl mx-auto md:mx-0 animate-slide-in-right animation-delay-400">
-              توی این سایت، چیزهایی که برای خودم مفید بوده مثل بازی‌ها، ابزارها
-              و تجربه‌هایی که داشتم رو به اشتراک می‌ذارم. اینجا جاییه برای{" "}
-              <span className="text-primary font-semibold">یادگیری</span>،{" "}
-              <span className="text-accent font-semibold">سرگرمی</span> و{" "}
-              <span className="text-secondary font-semibold">همکاری</span>!
+            <h1 className="text-4xl font-black leading-tight text-slate-900 md:text-6xl">
+              یک جعبه‌ابزار شخصی
+              <span className="block text-teal-700">
+                برای یادگیری، بازی و ساختن
+              </span>
+            </h1>
+
+            <p className="mt-5 max-w-xl text-base leading-8 text-slate-600 md:text-lg">
+              اینجا فضای من برای انتشار مقاله‌های فنی، ساخت بازی‌های آنلاین و
+              توسعه utility app های کاربردی است. هدف: محصولاتی ساده، سریع و
+              مفید.
             </p>
 
-            <div className="flex gap-4 justify-center md:justify-start animate-slide-in-right animation-delay-600">
-              <Button size="lg" className="shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
-                دانلود رزومه
-              </Button>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link href="/blog">
-                <Button variant="outline" size="lg" className="hover:shadow-lg transition-all duration-300 hover:scale-105 hover:text-black">
-                  مشاهده بلاگ
+                <Button className="w-full bg-teal-700 text-white hover:bg-teal-800 sm:w-auto">
+                  شروع با مقاله‌ها
+                  <ArrowLeft className="mr-1 h-4 w-4" />
+                </Button>
+              </Link>
+              <Link href="/games">
+                <Button
+                  variant="outline"
+                  className="w-full border-slate-300 sm:w-auto"
+                >
+                  مشاهده بازی‌ها
                 </Button>
               </Link>
             </div>
-
-            <div className="flex gap-4 justify-center md:justify-start pt-4 animate-slide-in-right animation-delay-800">
-              <a
-                href="https://github.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 rounded-full bg-primary/10 hover:bg-primary hover:text-white transition-all duration-300 hover:scale-110"
-              >
-                <Github size={24} />
-              </a>
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 rounded-full bg-primary/10 hover:bg-primary hover:text-white transition-all duration-300 hover:scale-110"
-              >
-                <Linkedin size={24} />
-              </a>
-            </div>
           </div>
 
-          <div className="flex-1 animate-slide-in-left">
-            <CodeAnimation />
-          </div>
-        </div>
-      </section>
-
-      <section className="relative py-20 bg-white/50 backdrop-blur-sm">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 animate-fade-in">
-            چی توی این سایت پیدا می‌کنی؟
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {features.map((feature, index) => (
-              <Link href={feature.link} key={index}>
-                <div
-                  className="group relative p-6 bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 cursor-pointer animate-fade-in-up overflow-hidden"
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                  <div
-                    className={`${feature.color} w-16 h-16 rounded-xl flex items-center justify-center text-white mb-4 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 relative z-10`}
-                  >
-                    {feature.icon}
-                  </div>
-
-                  <h3 className="text-xl font-bold mb-2 relative z-10">
-                    {feature.title}
-                  </h3>
-                  <p className="text-gray-600 relative z-10">{feature.description}</p>
-
-                  <div className="absolute -bottom-2 -left-2 w-20 h-20 bg-primary/5 rounded-full blur-xl group-hover:scale-150 transition-transform duration-500" />
+          <Card className="border-slate-200 bg-white/80 shadow-xl backdrop-blur">
+            <CardHeader>
+              <CardTitle className="text-xl">تمرکز فعلی سایت</CardTitle>
+              <CardDescription>
+                سه مسیر اصلی که به صورت موازی توسعه داده می‌شوند.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="flex items-start gap-3 rounded-xl border border-slate-100 bg-slate-50 p-3">
+                <BookOpenText className="mt-1 h-5 w-5 text-teal-700" />
+                <div>
+                  <p className="font-semibold text-slate-800">انتشار محتوا</p>
+                  <p className="text-sm text-slate-600">
+                    مقاله‌های فنی قابل استفاده در پروژه واقعی
+                  </p>
                 </div>
-              </Link>
-            ))}
-          </div>
+              </div>
+              <div className="flex items-start gap-3 rounded-xl border border-slate-100 bg-slate-50 p-3">
+                <Globe className="mt-1 h-5 w-5 text-indigo-700" />
+                <div>
+                  <p className="font-semibold text-slate-800">تجربه آنلاین</p>
+                  <p className="text-sm text-slate-600">
+                    بازی‌های تعاملی با طراحی ساده و سریع
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3 rounded-xl border border-slate-100 bg-slate-50 p-3">
+                <Calculator className="mt-1 h-5 w-5 text-orange-700" />
+                <div>
+                  <p className="font-semibold text-slate-800">
+                    ابزارهای ریز اما مفید
+                  </p>
+                  <p className="text-sm text-slate-600">
+                    اپ‌های کوچک برای صرفه‌جویی در زمان روزانه
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </section>
 
-      <section className="relative py-20">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 animate-fade-in">
-            ابزارها و زبان‌هایی که می‌شناسم
-          </h2>
-
-          <SkillIcons />
+      <section className="container mx-auto max-w-6xl px-4 pb-14 md:pb-20">
+        <div className="grid gap-5 md:grid-cols-3">
+          {pillars.map((item) => {
+            const Icon = item.icon;
+            return (
+              <Link key={item.title} href={item.href}>
+                <Card className="group h-full border-slate-200 transition-all hover:-translate-y-1 hover:shadow-xl">
+                  <CardHeader>
+                    <div
+                      className={`mb-3 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br ${item.accent}`}
+                    >
+                      <Icon className="h-5 w-5 text-slate-800" />
+                    </div>
+                    <CardTitle className="text-xl">{item.title}</CardTitle>
+                    <CardDescription className="leading-7">
+                      {item.description}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <span className="text-sm font-bold text-teal-700 group-hover:text-teal-800">
+                      مشاهده بخش
+                    </span>
+                  </CardContent>
+                </Card>
+              </Link>
+            );
+          })}
         </div>
+      </section>
+
+      <section className="container mx-auto max-w-6xl px-4 pb-14 md:pb-20">
+        <div className="grid items-center gap-8 lg:grid-cols-2">
+          <Card className="border-slate-200 bg-white shadow-lg">
+            <CardHeader>
+              <CardTitle className="text-2xl">توانمندی‌ها و ابزارها</CardTitle>
+              <CardDescription>
+                تکنولوژی‌هایی که با آن‌ها محصول واقعی می‌سازم.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <SkillIcons />
+            </CardContent>
+          </Card>
+
+          <Card className="border-slate-200 bg-gradient-to-br from-white to-teal-50 shadow-lg">
+            <CardHeader>
+              <CardTitle className="text-2xl">نمایی از فضای ساختن</CardTitle>
+              <CardDescription>
+                طراحی، توسعه و تجربه کاربری یک‌جا.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <CodeAnimation />
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      <section className="container mx-auto max-w-6xl px-4 pb-20">
+        <Card className="border-slate-200 bg-white">
+          <CardHeader>
+            <CardTitle className="inline-flex items-center gap-2 text-2xl">
+              <Rocket className="h-5 w-5 text-teal-700" />
+              مسیر توسعه سایت
+            </CardTitle>
+            <CardDescription>
+              برنامه‌ای ساده برای توسعه تدریجی محصولات این وب‌سایت.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid gap-4 md:grid-cols-3">
+              {roadmap.map((item, index) => (
+                <div
+                  key={item.title}
+                  className="rounded-xl border border-slate-200 p-4"
+                >
+                  <p className="mb-2 text-xs font-bold text-slate-500">
+                    مرحله {index + 1}
+                  </p>
+                  <h3 className="text-base font-bold text-slate-900">
+                    {item.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-7 text-slate-600">
+                    {item.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
       </section>
     </main>
   );
