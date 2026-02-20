@@ -14,7 +14,7 @@ const vazirmatn = Vazirmatn({
 export const metadata: Metadata = {
   title: "FarshidMK's Blog | 💻",
   description:
-    "Tutorials, games, and developer tools built with Next.js & Supabase. Learn, play, and explore useful resources from Farshid’s coding journey.",
+    "Tutorials, games, and developer tools built with Next.js & Nestjs. Learn, play, and explore useful resources from Farshid’s coding journey.",
 };
 
 export default function RootLayout({
