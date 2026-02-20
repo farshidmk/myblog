@@ -1,14 +1,18 @@
 "use client";
 
-import { EditGameWordCategory } from "@/app/games/settings/_actions/gameWord";
 import UserInputWrapper from "@/components/ui/userInputWrapper/UserInputWrapper";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { GameWordCategory } from "@prisma/client";
+import { GameWordCategory } from "@/types/game";
 import { CircleCheck } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { wordCategoryValidation } from "../gameSettingValidations";
 import WordsOfCategory from "./WordsOfCategory";
 import { useEffect } from "react";
+import { editGameWordCategory } from "@/lib/nestApi";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import Spinner from "@/components/ui/spinner";
 
 type Props = {
   category: GameWordCategory;
@@ -35,44 +39,44 @@ const EditCategory = ({ category }: Props) => {
   }, [category, setValue]);
 
   async function onSubmit({ name }: EditCategoryForm) {
-    const response = await EditGameWordCategory(name, category.id);
-    if (!response.success) {
-    }
+    await editGameWordCategory(category.id, name);
   }
 
   return (
-    <div className="card bg-base-100 shadow-md hover:shadow-lg transition-shadow border p-2">
-      <form onSubmit={handleSubmit(onSubmit)} className=" w-full">
+    <Card className="shadow-md hover:shadow-lg transition-shadow p-2">
+      <form onSubmit={handleSubmit(onSubmit)} className="w-full">
         {isSubmitting ? (
-          <span className="loading loading-spinner loading-xl"></span>
+          <Spinner className="h-8 w-8" />
         ) : (
-          <div className="card-body flex flex-row items-center justify-between w-72">
+          <CardContent className="p-2 flex flex-row items-center justify-between w-72">
             <div className="flex-1">
               <UserInputWrapper
-                label=" دسته بندی"
+                label=" ???? ????"
                 error={errors?.name?.message}
               >
-                <input
+                <Input
                   id="name"
                   type="text"
                   {...register("name")}
-                  placeholder=" دسته بندی را وارد کنید..."
-                  className="input input-sm border border-gray-300 flex-1"
+                  placeholder=" ???? ???? ?? ???? ????..."
+                  className="h-9"
                 />
               </UserInputWrapper>
             </div>
 
-            <button
-              className="btn btn-sm btn-ghost h-10 w-20"
+            <Button
+              size="sm"
+              variant="ghost"
+              className="h-10 w-20"
               disabled={isSubmitting || !Boolean(watch("name"))}
             >
-              <CircleCheck className="h-10 w-10 text-primary hover:text-primary-focus disabled:text-gray-300 transition-all" />
-            </button>
-          </div>
+              <CircleCheck className="h-5 w-5 text-primary" />
+            </Button>
+          </CardContent>
         )}
       </form>
       <WordsOfCategory key={category.id} categoryId={category.id} />
-    </div>
+    </Card>
   );
 };
 

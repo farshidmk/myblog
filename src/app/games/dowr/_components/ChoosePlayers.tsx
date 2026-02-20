@@ -8,6 +8,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { DowrChoosePlayer } from "../dowrGame-types";
 import CircleUsers from "./showUsers/CircleUsers";
 import ChooseWords from "./showUsers/ChooseWords";
+import { Button } from "@/components/ui/button";
 
 const ChoosePlayers = () => {
   const [numberOfPlayers, setNumberOfPlayers] = useState(4);
@@ -17,18 +18,15 @@ const ChoosePlayers = () => {
     },
   });
   const { watch, setValue, handleSubmit } = methods;
-  // const players = watch("players");
 
   const { setWordsDifficulty, setGameStep, setPlayers } = useDowrGame();
 
-  // Handle number of players change
   const handleNumPlayersChange = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
     const players = watch("players");
     const newNumPlayers = parseInt(event.target.value);
     setNumberOfPlayers(newNumPlayers);
-    // If the number of players is increased, append new empty fields
     const temp = [...watch("players")];
     if (newNumPlayers > players.length) {
       for (let i = players.length; i < newNumPlayers; i++) {
@@ -36,7 +34,6 @@ const ChoosePlayers = () => {
       }
     }
 
-    // If the number of players is decreased, remove fields
     if (newNumPlayers < players.length) {
       for (let i = players.length; i > newNumPlayers; i--) {
         temp.pop();
@@ -46,7 +43,6 @@ const ChoosePlayers = () => {
   };
 
   function onSubmitForm(values: DowrChoosePlayer) {
-    console.log({ values });
     setWordsDifficulty(values.difficulty);
     setPlayers(values.players?.map((player) => player.name));
     setGameStep("in game");
@@ -54,8 +50,12 @@ const ChoosePlayers = () => {
 
   return (
     <div className="container max-w-lg mx-auto p-2">
-      <UserInputWrapper label="تعداد ">
-        <select value={numberOfPlayers} onChange={handleNumPlayersChange}>
+      <UserInputWrapper label="????? ">
+        <select
+          value={numberOfPlayers}
+          onChange={handleNumPlayersChange}
+          className="h-10 rounded-md border border-gray-300 bg-white px-3 py-2 text-sm"
+        >
           {NUMBER_OF_PLAYERS.map((num) => (
             <option key={num} value={num}>
               {num}
@@ -71,12 +71,9 @@ const ChoosePlayers = () => {
           <CircleUsers />
           <ChooseWords />
           <div className="w-full mt-4 px-4">
-            <button
-              type="submit"
-              className="btn btn-outline btn-primary w-full"
-            >
-              شروع
-            </button>
+            <Button type="submit" variant="outline" className="w-full">
+              ????
+            </Button>
           </div>
         </form>
       </FormProvider>

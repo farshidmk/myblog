@@ -1,4 +1,4 @@
-import { Difficulty, GameWordCategory } from "@prisma/client";
+import { Difficulty, GameWordCategory } from "@/types/game";
 
 export type DowrChoosePlayer = {
   players: { name: string }[];

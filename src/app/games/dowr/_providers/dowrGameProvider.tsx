@@ -1,13 +1,14 @@
 "use client";
 import { createContext, useState } from "react";
 import { DowrContextType } from "../_types/dowrType";
+import { Difficulty } from "@/types/game";
 
 export const DowrGameContext = createContext<DowrContextType>({
   numberOfPlayers: 4,
   setNumberOfPlayers: () => {},
   players: [],
   setPlayers: () => {},
-  wordsDifficulty: ["easy"],
+  wordsDifficulty: [Difficulty.easy],
   setWordsDifficulty: () => {},
   gameStep: "choose players",
   setGameStep: () => {},

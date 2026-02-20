@@ -1,31 +1,33 @@
 "use client";
-import { signOut, useSession } from "next-auth/react";
 import React from "react";
 import { KeySquare } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/components/providers/AuthProvider";
+import { Button } from "@/components/ui/button";
+import Spinner from "@/components/ui/spinner";
 
 const AuthButton = () => {
-  const session = useSession();
+  const { status, user, logout } = useAuth();
   const router = useRouter();
-  if (session.status === "unauthenticated") {
+
+  if (status === "unauthenticated") {
     return (
-      <button
-        className="btn btn-outline btn-primary"
-        onClick={() => router.push("/auth/login")}
-      >
+      <Button variant="outline" onClick={() => router.push("/auth/login")}>
         ورود
-        <KeySquare />
-      </button>
+        <KeySquare className="h-4 w-4" />
+      </Button>
     );
   }
-  if (session.status === "authenticated") {
+
+  if (status === "authenticated") {
     return (
-      <button className="flex h-10 rounded-lg" onClick={() => signOut()}>
-        {session.data?.user?.name}
-      </button>
+      <Button variant="ghost" className="h-10" onClick={logout}>
+        {user?.firstName || user?.username || user?.email}
+      </Button>
     );
   }
-  return <span className="loading loading-spinner"></span>;
+
+  return <Spinner />;
 };
 
 export default AuthButton;

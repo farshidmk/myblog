@@ -3,8 +3,8 @@ import "./globals.css";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
 import { Vazirmatn } from "next/font/google";
-import { SessionProvider } from "next-auth/react";
 import { Bounce, ToastContainer } from "react-toastify";
+import AppProviders from "@/components/providers/AppProviders";
 
 const vazirmatn = Vazirmatn({
   subsets: ["arabic"],
@@ -14,7 +14,7 @@ const vazirmatn = Vazirmatn({
 export const metadata: Metadata = {
   title: "FarshidMK's Blog | 💻",
   description:
-    "Tutorials, games, and developer tools built with Next.js & Supabase. Learn, play, and explore useful resources from Farshid’s coding journey.",
+    "Tutorials, games, and developer tools built with Next.js & Nestjs. Learn, play, and explore useful resources from Farshid’s coding journey.",
 };
 
 export default function RootLayout({
@@ -41,13 +41,11 @@ export default function RootLayout({
           transition={Bounce}
         />
 
-        <SessionProvider>
+        <AppProviders>
           <Navbar />
-          <main className="flex-1 overflow-y-auto">
-            {children}
-          </main>
+          <main className="flex-1 overflow-y-auto">{children}</main>
           <Footer />
-        </SessionProvider>
+        </AppProviders>
       </body>
     </html>
   );

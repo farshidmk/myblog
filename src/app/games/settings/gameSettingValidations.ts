@@ -1,4 +1,4 @@
-import { Difficulty } from "@prisma/client";
+import { Difficulty } from "@/types/game";
 import { z } from "zod";
 
 export const difficultyEnum = z.enum(["USER", "ADMIN", "MODERATOR"]);

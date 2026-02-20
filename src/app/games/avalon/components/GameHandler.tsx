@@ -27,7 +27,7 @@ const GameHandler = () => {
     }
   };
 
-  return <div className="min-h-screen bg-gray-100">{renderGameStep()}</div>;
+  return <div className="h-full bg-gray-100">{renderGameStep()}</div>;
 };
 
 export default GameHandler;

@@ -4,11 +4,7 @@ import AvalonProvider from "./AvalonProvider";
 type Props = { children: React.ReactNode };
 
 const AvalonLayout = ({ children }: Props) => {
-  return (
-    <div>
-      <AvalonProvider>{children}</AvalonProvider>
-    </div>
-  );
+  return <AvalonProvider>{children}</AvalonProvider>;
 };
 
 export default AvalonLayout;

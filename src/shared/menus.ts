@@ -1,4 +1,4 @@
-export const MENUS: Menu[] = [
+﻿export const MENUS: Menu[] = [
   {
     title: "بازی",
     path: "/games",
@@ -10,5 +10,10 @@ export const MENUS: Menu[] = [
   {
     title: "برنامه",
     path: "/utils",
+  },
+  {
+    title: "تنظیمات",
+    path: "/settings",
+    isAdminOnly: true,
   },
 ];
